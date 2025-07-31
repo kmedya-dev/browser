@@ -1,0 +1,22 @@
+# Python Virtual Environment
+myenv/
+
+# Python cache files
+__pycache__/
+*.pyc
+
+# Buildozer build artifacts
+.buildozer/
+bin/
+lib/
+
+# Android package files
+*.apk
+*.aab
+
+# Keystore files (sensitive)
+*.keystore
+
+# IDE / Editor specific files
+.idea/
+.vscode/

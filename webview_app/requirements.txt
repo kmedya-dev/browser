@@ -1,0 +1,5 @@
+kivy
+pyjnius
+webview-android
+pywebview[gtk] # Using GTK for Linux, pywebview handles macOS/Windows automatically
+watchdog
