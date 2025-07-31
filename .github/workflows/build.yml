@@ -29,23 +29,19 @@ jobs:
         distribution: 'zulu'
         java-version: '11'
 
-    # Signing steps are removed for debug build
-
     - name: Build with Buildozer
-      working-directory: ./webview_app
       run: |
         buildozer -v android debug
-      # No signing environment variables needed for debug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v3
       with:
         name: webview-app-debug-apk
-        path: webview_app/bin/*.apk
+        path: bin/*.apk
 
     - name: Upload Build Log Artifact
       if: always()
       uses: actions/upload-artifact@v3
       with:
         name: buildozer-log
-        path: webview_app/.buildozer/buildozer.log
+        path: .buildozer/buildozer.log
