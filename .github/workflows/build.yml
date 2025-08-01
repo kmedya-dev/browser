@@ -27,7 +27,7 @@ jobs:
       uses: actions/setup-java@v3
       with:
         distribution: 'zulu'
-        java-version: '11'
+        java-version: '17'
 
     - name: Install Android SDK Build Tools and Platform Tools
       run: |
@@ -40,7 +40,7 @@ jobs:
         mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
         
         # Accept licenses and install build-tools and platform-tools
-        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
         $ANDROID_HOME/cmdlinetools/latest/bin/sdkmanager "build-tools;36.0.0" "platforms;android-33" "platform-tools"
         
         # Add platform-tools to PATH for adb, etc.
