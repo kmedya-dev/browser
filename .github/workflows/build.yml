@@ -31,27 +31,23 @@ jobs:
 
     - name: Install Android SDK Build Tools and Platform Tools
       run: |
-        # Set ANDROID_HOME to a known path
         echo "ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk" >> $GITHUB_ENV
         mkdir -p $ANDROID_HOME
-        # Download and install sdkmanager
         wget -q https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip -O /tmp/commandlinetools.zip
         unzip -q /tmp/commandlinetools.zip -d $ANDROID_HOME/cmdline-tools
         mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
-        
-        # Accept licenses and install build-tools and platform-tools
         yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
-        $ANDROID_HOME/cmdlinetools/latest/bin/sdkmanager "build-tools;36.0.0" "platforms;android-33" "platform-tools"
-        
-        # Add platform-tools to PATH for adb, etc.
+        $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "build-tools;36.0.0" "platforms;android-33" "platform-tools"
         echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
         echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
 
     - name: Build with Buildozer
       run: |
-        buildozer -v android debug
+        mkdir -p logs
+        buildozer -v android debug | tee logs/buildozer-output.log
 
     - name: Upload APK Artifact
+      if: always()
       uses: actions/upload-artifact@v4
       with:
         name: webview-app-debug-apk
@@ -63,3 +59,10 @@ jobs:
       with:
         name: buildozer-log
         path: .buildozer/buildozer.log
+
+    - name: Upload Terminal Output Log (terminal)
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: buildozer-output-log
+        path: logs/buildozer-output.log
