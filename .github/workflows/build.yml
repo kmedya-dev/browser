@@ -2,69 +2,72 @@ name: Build ErudaBrowser APK
 
 on:
   push:
-    branches: [main]
-    tags: ["v*"]
+    branches: [ main ]
+    tags:
+      - 'v*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     env:
-      ANDROID_HOME: ${{ github.workspace }}/android-sdk
-      NDK_VERSION: 25.1.8937393
-      API_LEVEL: 33
+      ANDROID_SDK_ROOT: /opt/android-sdk
+      ANDROID_HOME: /opt/android-sdk
+      BUILD_TOOLS_VERSION: "36.0.0"
+      API_LEVEL: "33"
 
     steps:
-    - name: 📥 Checkout code
+    - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: 🧰 Install system dependencies
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install system dependencies
       run: |
         sudo apt update
-        sudo apt install -y zip unzip openjdk-17-jdk python3.11 python3.11-venv python3-pip libtool libffi-dev build-essential
+        sudo apt install -y zip unzip openjdk-17-jdk python3-pip python3-setuptools libtool libffi-dev libssl-dev zlib1g-dev
 
-    - name: 🐍 Setup Python 3.11
+    - name: Set up Android SDK
       run: |
-        python3.11 -m venv venv
-        source venv/bin/activate
-        pip install --upgrade pip
-        pip install buildozer cython appdirs colorama packaging jinja2 toml
-
-    - name: 🛠️ Install Android SDK manually
-      run: |
-        mkdir -p $ANDROID_HOME/cmdline-tools
-        cd $ANDROID_HOME/cmdline-tools
-        curl -sSLo sdk.zip https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip
-        unzip -q sdk.zip
-        mv cmdline-tools latest
-        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDROID_HOME} --licenses
-        $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root=${ANDROID_HOME} \
+        sudo mkdir -p $ANDROID_SDK_ROOT/cmdline-tools
+        cd $ANDROID_SDK_ROOT/cmdline-tools
+        curl -o sdk.zip https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+        unzip sdk.zip -d latest
+        rm sdk.zip
+        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses >/dev/null 2>&1 || true
+        $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install \
           "platform-tools" \
-          "build-tools;36.0.0" \
           "platforms;android-${API_LEVEL}" \
-          "ndk;${NDK_VERSION}" \
-          "cmdline-tools;latest"
+          "build-tools;${BUILD_TOOLS_VERSION}" \
+          "ndk;25.1.8937393"
 
-    - name: 🛠️ Set PATHs
+    - name: Install Python requirements
       run: |
-        echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
-        echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
-        echo "$ANDROID_HOME/tools/bin" >> $GITHUB_PATH
+        python3 -m pip install --upgrade pip setuptools wheel
+        pip install -r buildozer-requirements.txt
 
-    - name: ⚙️ Build Debug APK with Buildozer
+    - name: Build APK
       run: |
-        source venv/bin/activate
         buildozer android debug
 
-    - name: 📦 Upload Debug APK
+    - name: Upload debug APK
       uses: actions/upload-artifact@v4
       with:
-        name: debug-apk
+        name: webview-app-debug-apk
         path: bin/*.apk
 
-    - name: 📄 Upload Build Logs
+    - name: Upload build logs
       uses: actions/upload-artifact@v4
       with:
-        name: build-logs
-        path: |
-          .buildozer/buildozer.log
-          buildozer.spec
+        name: buildozer-output-log
+        path: .buildozer/buildozer.log buildozer.spec
+
+    - name: Create GitHub Release
+      if: startsWith(github.ref, 'refs/tags/v')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          bin/*.apk
