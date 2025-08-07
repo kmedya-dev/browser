@@ -32,14 +32,6 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: 📦 Manually install Android SDK & accept licenses
-        run: |
-          mkdir -p ~/.android
-          echo "### User agreed to all licenses ###" > ~/.android/repositories.cfg
-          buildozer android clean
-          yes | buildozer android update || true
-          yes | ~/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses || true
-
       - name: 🏗️ Trigger SDK setup
         run: |
           mkdir -p logs
