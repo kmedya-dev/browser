@@ -27,6 +27,17 @@ jobs:
         python -m pip install --upgrade pip
         pip install buildozer cython
 
+    - name: Check if .buildozer directory exists
+      run: |
+        if [ -d .buildozer ]; then
+          echo ".buildozer directory exists ✅"
+          echo "Listing contents:"
+          ls -la .buildozer
+        else
+          echo "❌ .buildozer directory NOT found"
+          exit 1
+        fi
+
     - name: Set up Java and Android SDK
       uses: actions/setup-java@v4
       with:
