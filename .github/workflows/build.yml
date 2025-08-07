@@ -32,6 +32,16 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
+      - name: 🧰 Manually Install Android SDK Build-Tools 33.0.2
+        run: |
+          yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses
+          sdkmanager --sdk_root=${ANDROID_HOME} "platforms;android-33" "build-tools;33.0.2"
+
+      - name: 🛠️ Force Build Tools Version
+        run: |
+          echo "sdk.dir=$ANDROID_HOME" >> local.properties
+          echo "sdk.buildtools=33.0.2" >> local.properties
+
       - name: 🏗️ Trigger SDK setup
         run: |
           mkdir -p logs
