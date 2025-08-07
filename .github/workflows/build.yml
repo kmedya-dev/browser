@@ -73,6 +73,24 @@ jobs:
         mkdir -p logs
         buildozer -v android debug | tee logs/buildozer-output.log
 
+    - name: Check if .buildozer directory exists
+      run: |
+        if [ -d .buildozer ]; then
+          echo ".buildozer directory exists ✅"
+          echo "Listing contents:"
+          ls -la .buildozer
+        else
+          echo "❌ .buildozer directory NOT found"
+          exit 1
+        fi
+
+    - name: Upload .buildozer folder as artifact (for debugging)
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: buildozer-folder
+        path: .buildozer
+
     - name: Upload APK Artifact
       if: always()
       uses: actions/upload-artifact@v4
