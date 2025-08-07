@@ -37,6 +37,11 @@ jobs:
           mkdir -p logs
           buildozer android debug || true
 
+      - name: Debug build-tools content
+        run: |
+          echo "Checking aidl path..."
+          find ~/.buildozer/android/platform/android-sdk/build-tools/ -name "aidl"
+
       - name: 📁 Check if .buildozer directory exists
         run: |
           if [ -d .buildozer ]; then
