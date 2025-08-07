@@ -42,11 +42,17 @@ jobs:
         unzip -q /tmp/commandlinetools.zip -d "$ANDROID_HOME/cmdline-tools"
         mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
 
-        # Accept licenses
-        yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses >/dev/null 2>&1 || true
+    - name: Accept Android SDK Licenses
+      env:
+        ANDROID_HOME: $HOME/.buildozer/android/platform/android-sdk
+      run: |
+        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
 
-        # Install required SDK components
-        yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
+    - name: Install SDK packages
+      env:
+        ANDROID_HOME: $HOME/.buildozer/android/platform/android-sdk
+      run: |
+        $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --sdk_root="$ANDROID_HOME" \
           "build-tools;36.0.0" \
           "platforms;android-33" \
           "platform-tools" \
