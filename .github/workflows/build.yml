@@ -48,7 +48,8 @@ jobs:
           fi
 
       - name: Install Android SDK Commandline Tools
-        run: |   ANDROID_SDK_ROOT=$HOME/.buildozer/android/platform/android-sdk
+        run: |
+          ANDROID_SDK_ROOT=$HOME/.buildozer/android/platform/android-sdk
           echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
           mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools"
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip -O /tmp/commandlinetools.zip
