@@ -32,6 +32,13 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
+      - name: Accept Android SDK Licenses
+        env:
+          ANDROID_HOME: $HOME/.buildozer/android/platform/android-sdk
+          JAVA_HOME: /opt/hostedtoolcache/Java_Zulu_jdk/17.0.16-8/x64
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+
       - name: 🏗️ Trigger SDK setup
         run: |
           mkdir -p logs
@@ -40,7 +47,7 @@ jobs:
       - name: Debug build-tools content
         run: |
           echo "Checking aidl path..."
-          find ~/.buildozer/android/platform/android-sdk/build-tools/ -name "aidl"
+          find ~/.buildozer/android/platform/android-sdk/build-tools/ -name "aidl" || echo "❌ aidl not found"
 
       - name: 📁 Check if .buildozer directory exists
         run: |
