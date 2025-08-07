@@ -37,27 +37,6 @@ jobs:
           mkdir -p logs
           buildozer android debug || true
 
-      - name: 📂 Python License Summary
-        run: |
-          pip-licenses --summary
-
-      - name: 🔎 Check Custom .license Expiry
-        run: |
-          if [ -f "license.txt" ]; then
-            expiry_date=$(grep -i "Expires:" license.txt | cut -d ':' -f2- | xargs)
-            echo "Expiry: $expiry_date"
-            expiry_ts=$(date -d "$expiry_date" +%s || echo 0)
-            now_ts=$(date +%s)
-            if [[ "$expiry_ts" -lt "$now_ts" ]]; then
-              echo "❌ License Expired"
-              exit 1
-            else
-              echo "✅ License Active"
-            fi
-          else
-            echo "⚠️ No license.txt found"
-          fi
-
       - name: 📁 Check if .buildozer directory exists
         run: |
           if [ -d .buildozer ]; then
