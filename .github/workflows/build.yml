@@ -38,7 +38,11 @@ jobs:
         echo "ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk" >> $GITHUB_ENV
         export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
         mkdir -p "$ANDROID_HOME"
-        wget -q https://github.com/kmedya-dev/browser/releases/tag/v1.0.0 -O /tmp/commandlinetools.zip
+
+        # Download the actual ZIP from the GitHub Release
+        wget -q https://github.com/kmedya-dev/browser/releases/download/v1.0.0/commandlinetools-linux-13114758_latest.zip -O /tmp/commandlinetools.zip
+
+        # Extract to cmdline-tools
         unzip -q /tmp/commandlinetools.zip -d "$ANDROID_HOME/cmdline-tools"
         mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
 
