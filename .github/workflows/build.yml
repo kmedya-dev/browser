@@ -75,11 +75,34 @@ jobs:
 
     - name: Check if .buildozer directory exists
       run: |
+        echo " Checking for .buildozer directory..."
         if [ -d .buildozer ]; then
-          echo ".buildozer directory exists ✅"
+          echo "✅ .buildozer directory found!"
+          echo " Contents:"
           ls -la .buildozer
         else
-          echo "❌ .buildozer directory NOT found"
+          echo "❌ ERROR: .buildozer directory NOT found!"
+          echo " Possible fix: Run 'buildozer android debug' locally to generate it."
+          exit 1
+        fi
+
+    - name: Scan .buildozer logs for Android/WebView/Pyjnius issues
+      if: success()
+      run: |
+        echo " Scanning build logs for keywords: android, webview, pyjnius..."
+        LOG_FILE=".buildozer/android/platform/build.log"
+
+        if [ -f "$LOG_FILE" ]; then
+          MATCHES=$(grep -i -n -E "webview|pyjnius|error|failed" "$LOG_FILE" || true)
+
+          if [ -n "$MATCHES" ]; then
+            echo -e "\033[1;33m⚠️ WARNING: Potential issues found in build.log\033[0m"
+            grep -i -n -A5 -B5 -E "webview|pyjnius|error|failed" "$LOG_FILE"
+          else
+            echo -e "\033[1;32m✅ No matching issues found.\033[0m"
+          fi
+        else
+          echo -e "\033[1;31m❌ Build log not found at $LOG_FILE\033[0m"
           exit 1
         fi
 
