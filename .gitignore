@@ -20,4 +20,7 @@ lib/
 # IDE / Editor specific files
 .idea/
 .vscode/
+
+# Extras
+release.sh
 commandlinetools-linux-13114758_latest.zip
