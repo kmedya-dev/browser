@@ -32,7 +32,7 @@ jobs:
 
     - name: Apply pyjnius long fix patch
       run: |
-        patch -p1 -d ${{ github.workspace }}/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/other_builds/pyjnius-sdl2/arm64-v8a__ndk_target_24/pyjnius < pyjnius_long_fix.patch || true
+        patch -p1 -d "${GITHUB_WORKSPACE}/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/other_builds/pyjnius-sdl2/arm64-v8a__ndk_target_24/pyjnius" < pyjnius_long_fix.patch || true
 
     - name: Install p4a prerequisites
       run: |
@@ -75,7 +75,7 @@ jobs:
       id: cache-android-sdk
       uses: actions/cache@v4
       with:
-        path: ~/.buildozer/android/platform/android-sdk
+        path: ${{ env.HOME }}/.buildozer/android/platform/android-sdk
         key: ${{ runner.os }}-android-sdk-33-ndk-25.1.8937393
 
     - name: Install Android SDK Build Tools and Platform Tools
@@ -114,14 +114,14 @@ jobs:
 
     - name: Attempt to fix libffi build (libtoolize)
       run: |
-        # Navigate to the libffi source directory within the p4a build environment
-        LIBFFI_DIR="${{ github.workspace }}/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/other_builds/libffi/armeabi-v7a__ndk_target_24/libffi"
+        # Navigate to the libffi source directory within the p4a build
+        LIBFFI_DIR="${GITHUB_WORKSPACE}/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/other_builds/libffi/armeabi-v7a__ndk_target_24/libffi"
         if [ -d "$LIBFFI_DIR" ]; then
           echo "Attempting libtoolize --force in $LIBFFI_DIR"
           cd "$LIBFFI_DIR"
-          libtoolize --force || true
-          autoreconf --force --install || true
-          cd "${{ github.workspace }}"
+          libtoolize --force
+          autoreconf --force --install
+          cd "${GITHUB_WORKSPACE}"
         else
           echo "Libffi directory not found at $LIBFFI_DIR. Skipping libtoolize fix."
         fi
