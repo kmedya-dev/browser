@@ -43,6 +43,23 @@ jobs:
         unzip -q /tmp/commandlinetools.zip -d "$ANDROID_HOME/cmdline-tools"
         mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
 
+        # Create legacy /tools/bin path for sdkmanager compatibility
+        mkdir -p "$ANDROID_HOME/tools/bin"
+        ln -sf "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$ANDROID_HOME/tools/bin/sdkmanager"
+
+        # Accept licenses
+        yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses >/dev/null 2>&1 || true
+
+        # Install required SDK packages
+        yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
+          "build-tools;33.0.2" \
+          "platforms;android-33" \
+          "platform-tools" \
+          "ndk;25.1.8937393"
+
+        echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
+        echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
+
     - name: Build with Buildozer
       run: |
         mkdir -p logs
