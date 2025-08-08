@@ -112,8 +112,7 @@ jobs:
 
     - name: Build with Buildozer
       run: |
-        mkdir -p logs
-        buildozer -v android debug | tee logs/buildozer-output.log
+        buildozer -v android debug | tee buildozer-output.log
 
     - name: Upload APK Artifact
       if: always()
@@ -127,7 +126,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: buildozer-log
-        path: .buildozer/buildozer.log
+        path: buildozer-output.log
 
     - name: Upload Spec File Artifact
       if: always()
@@ -135,10 +134,3 @@ jobs:
       with:
         name: buildozer-spec
         path: buildozer.spec
-
-    - name: Upload Terminal Output Log
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: buildozer-output-log
-        path: logs/buildozer-output.log
