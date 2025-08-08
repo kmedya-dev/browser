@@ -16,7 +16,6 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         submodules: true
 
-
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -39,17 +38,19 @@ jobs:
         export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
         mkdir -p "$ANDROID_HOME"
 
-        # Download the actual ZIP from the GitHub Release
+        # Download Android cmdline-tools
         wget -q https://github.com/kmedya-dev/browser/releases/download/v1.0.0/commandlinetools-linux-13114758_latest.zip -O /tmp/commandlinetools.zip
-
-        # Extract to cmdline-tools
         unzip -q /tmp/commandlinetools.zip -d "$ANDROID_HOME/cmdline-tools"
         mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
+
+        # Create legacy /tools/bin path for sdkmanager compatibility
+        mkdir -p "$ANDROID_HOME/tools/bin"
+        ln -sf "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$ANDROID_HOME/tools/bin/sdkmanager"
 
         # Accept licenses
         yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses >/dev/null 2>&1 || true
 
-        # Install required SDK components
+        # Install required SDK packages
         yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
           "build-tools;33.0.2" \
           "platforms;android-33" \
@@ -78,7 +79,7 @@ jobs:
         name: buildozer-log
         path: .buildozer/buildozer.log buildozer.spec
 
-    - name: Upload Terminal Output Log (terminal)
+    - name: Upload Terminal Output Log
       if: always()
       uses: actions/upload-artifact@v4
       with:
