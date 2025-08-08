@@ -7,6 +7,8 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.label import Label
+from kivy.uix.popup import Popup
+from kivy.storage.jsonstore import JsonStore
 from kivy.utils import platform
 from kivy.clock import Clock
 from kivy.core.window import Window
@@ -28,6 +30,7 @@ def get_webview_bridge(log_callback=None):
 
 class WebViewApp(App):
     def build(self):
+        self.store = JsonStore('bookmarks.json')
         self.root_layout = BoxLayout(orientation='vertical')
 
         # --- URL Input and Controls ---
@@ -37,6 +40,13 @@ class WebViewApp(App):
         controls = BoxLayout(size_hint_y=None, height=44)
         go_button = Button(text='Go')
         go_button.bind(on_press=self.load_url)
+        
+        save_button = Button(text='Save')
+        save_button.bind(on_press=self.save_bookmark)
+        
+        bookmarks_button = Button(text='Bookmarks')
+        bookmarks_button.bind(on_press=self.show_bookmarks)
+
         theme_button = Button(text='Theme')
         theme_button.bind(on_press=self.toggle_theme)
         lang_button = Button(text='Lang')
@@ -46,6 +56,8 @@ class WebViewApp(App):
         live_button.bind(on_press=self.toggle_live_server)
 
         controls.add_widget(go_button)
+        controls.add_widget(save_button)
+        controls.add_widget(bookmarks_button)
         controls.add_widget(theme_button)
         controls.add_widget(lang_button)
         controls.add_widget(live_button)
@@ -187,6 +199,36 @@ class WebViewApp(App):
         self.webview_bridge.set_language(new_lang)
         self._lang = new_lang
         self.update_log_view(f"[APP] Language set to {new_lang}")
+
+    def save_bookmark(self, instance):
+        url = self.url_input.text.strip()
+        if url:
+            self.store.put(url, title=url) # For simplicity, title is the URL
+            self.update_log_view(f"[APP] Bookmark saved: {url}")
+
+    def show_bookmarks(self, instance):
+        popup_layout = BoxLayout(orientation='vertical')
+        for url in self.store:
+            bookmark_entry = BoxLayout(size_hint_y=None, height=44)
+            btn = Button(text=url)
+            btn.bind(on_press=lambda x, url=url: self.load_bookmark(url))
+            delete_btn = Button(text='X', size_hint_x=0.2)
+            delete_btn.bind(on_press=lambda x, url=url: self.delete_bookmark(url))
+            bookmark_entry.add_widget(btn)
+            bookmark_entry.add_widget(delete_btn)
+            popup_layout.add_widget(bookmark_entry)
+
+        popup = Popup(title='Bookmarks', content=popup_layout, size_hint=(0.9, 0.9))
+        popup.open()
+
+    def load_bookmark(self, url):
+        self.url_input.text = url
+        self.load_url(None)
+
+    def delete_bookmark(self, url):
+        if self.store.exists(url):
+            self.store.delete(url)
+            self.update_log_view(f"[APP] Bookmark deleted: {url}")
 
 if __name__ == '__main__':
     WebViewApp().run()
