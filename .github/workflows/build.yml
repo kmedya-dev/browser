@@ -73,6 +73,10 @@ jobs:
     - name: Install OpenSSL development libraries
       run: sudo apt-get update && sudo apt-get install -y libssl-dev
 
+    - name: Trigger SDK setup
+      run: |
+        buildozer android debug || true
+
     - name: Check if .buildozer directory exists
       run: |
         echo " Checking for .buildozer directory..."
