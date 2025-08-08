@@ -10,7 +10,7 @@ fullscreen = 0
 android.api = 33
 android.build_tools_version = 33.0.2
 android.minapi = 24
-android.ndk = 26c
+android.ndk = 25b
 android.archs = arm64-v8a, armeabi-v7a
 android.manifest.intent_filters = intent_filters.xml
 

@@ -26,6 +26,36 @@ jobs:
         python -m pip install --upgrade pip
         pip install buildozer cython
 
+    - name: Install p4a prerequisites
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+            ant \
+            autoconf \
+            automake \
+            ccache \
+            cmake \
+            g++ \
+            gcc \
+            git \
+            lbzip2 \
+            libffi-dev \
+            libltdl-dev \
+            libtool \
+            libssl-dev \
+            make \
+            openjdk-17-jdk \
+            patch \
+            pkg-config \
+            python3 \
+            python3-dev \
+            python3-pip \
+            python3-venv \
+            sudo \
+            unzip \
+            wget \
+            zip
+
     - name: Set up Java
       uses: actions/setup-java@v4
       with:
@@ -73,6 +103,41 @@ jobs:
     - name: Install OpenSSL development libraries
       run: sudo apt-get update && sudo apt-get install -y libssl-dev
 
+    - name: Attempt to fix libffi build (libtoolize)
+      run: |
+        # Navigate to the libffi source directory within the p4a build environment
+        LIBFFI_DIR="${{ github.workspace }}/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/other_builds/libffi/armeabi-v7a__ndk_target_24/libffi"
+        if [ -d "$LIBFFI_DIR" ]; then
+          echo "Attempting libtoolize --force in $LIBFFI_DIR"
+          cd "$LIBFFI_DIR"
+          libtoolize --force || true
+          autoreconf --force --install || true
+          cd "${{ github.workspace }}"
+        else
+          echo "Libffi directory not found at $LIBFFI_DIR. Skipping libtoolize fix."
+        fi
+
+    - name: Install specific Autotools versions (for libffi)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y make gcc
+
+        # Install Autoconf 2.69
+        curl -sL http://ftp.gnu.org/gnu/autoconf/autoconf-2.69.tar.gz | tar xz
+        cd autoconf-2.69
+        ./configure
+        make
+        sudo make install
+        cd ..
+
+        # Install Libtool 2.4.6
+        curl -sL http://ftp.gnu.org/gnu/libtool/libtool-2.4.6.tar.gz | tar xz
+        cd libtool-2.4.6
+        ./configure
+        make
+        sudo make install
+        cd ..
+
     - name: Trigger SDK setup
       run: |
         buildozer android debug || true
@@ -90,29 +155,10 @@ jobs:
           exit 1
         fi
 
-    - name: Scan .buildozer logs for Android/WebView/Pyjnius issues
-      if: success()
-      run: |
-        echo " Scanning build logs for keywords: android, webview, pyjnius..."
-        LOG_FILE=".buildozer/android/platform/build.log"
-
-        if [ -f "$LOG_FILE" ]; then
-          MATCHES=$(grep -i -n -E "webview|pyjnius|error|failed" "$LOG_FILE" || true)
-
-          if [ -n "$MATCHES" ]; then
-            echo -e "\033[1;33m⚠️ WARNING: Potential issues found in build.log\033[0m"
-            grep -i -n -A5 -B5 -E "webview|pyjnius|error|failed" "$LOG_FILE"
-          else
-            echo -e "\033[1;32m✅ No matching issues found.\033[0m"
-          fi
-        else
-          echo -e "\033[1;31m❌ Build log not found at $LOG_FILE\033[0m"
-          exit 1
-        fi
-
     - name: Build with Buildozer
       run: |
-        buildozer -v android debug | tee buildozer-output.log
+        mkdir -p logs
+        buildozer -v android debug | tee logs/buildozer-output.log
 
     - name: Upload APK Artifact
       if: always()
@@ -126,11 +172,13 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: buildozer-log
-        path: buildozer-output.log
+        path: .buildozer/buildozer.log
 
-    - name: Upload Spec File Artifact
+    
+
+    - name: Upload Terminal Output Log
       if: always()
       uses: actions/upload-artifact@v4
       with:
-        name: buildozer-spec
-        path: buildozer.spec
+        name: buildozer-output-log
+        path: logs/buildozer-output.log
