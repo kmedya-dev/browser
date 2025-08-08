@@ -11,6 +11,7 @@ A minimal, modern, cross-platform WebView application built with Kivy and Python
 - **Native Android Debugging:** Forwards all console messages to `logcat` for powerful, PC-free inspection.
 - **Live-Reload Server:** Includes a built-in web server and file watcher for rapid offline-first web development.
 - **CI/CD Ready:** A pre-configured GitHub Actions workflow automatically builds a debug APK on every push.
+- **Bookmark Manager:** Save, view, and load your favorite URLs.
 
 ## 🛠️ Tech Stack
 
