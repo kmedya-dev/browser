@@ -13,6 +13,7 @@ android.minapi = 24
 android.ndk = 25b
 android.archs = arm64-v8a
 android.manifest.intent_filters = intent_filters.xml
+android.permissions = INTERNET
 
 [buildozer]
 log_level = 2
