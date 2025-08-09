@@ -71,13 +71,16 @@ jobs:
         run: |
           LIBFFI_DIR="${GITHUB_WORKSPACE}/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/other_builds/libffi/armeabi-v7a__ndk_target_24/libffi"
           if [ -d "$LIBFFI_DIR" ]; then
-            echo "Running libtoolize --force in $LIBFFI_DIR"
+            echo "Running autotools fix sequence in $LIBFFI_DIR"
             cd "$LIBFFI_DIR"
-            libtoolize --force
+            libtoolize --force --copy
+            aclocal
+            autoconf
+            automake --add-missing
             autoreconf --force --install
             cd "${GITHUB_WORKSPACE}"
           else
-            echo "Libffi directory not found at $LIBFFI_DIR. Skipping libtoolize fix."
+            echo "Libffi directory not found. Skipping libtoolize fix."
           fi
 
       # Apply pyjnius long fix patch
