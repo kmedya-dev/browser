@@ -1,12 +1,6 @@
 --- a/jnius/jnius_utils.pxi
 +++ b/jnius/jnius_utils.pxi
-@@ -324,5 +324,4 @@
--        if r == 'S' or r == 'I':
+@@ -326,3 +326,1 @@
 -            if isinstance(arg, int) or (
 -                    (isinstance(arg, long) and arg < 2147483648)):
--                score += 10
--                continue
-+        if r == 'S' or r == 'I':  # S for short, I for int
 +            if isinstance(arg, int) and arg < 2147483648:
-+                score += 10
-+                continue
