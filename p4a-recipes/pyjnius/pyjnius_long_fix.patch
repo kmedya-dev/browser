@@ -1,5 +1,5 @@
---- jnius_utils.pxi.original	2025-08-09 12:00:00.000000000 +0000
-+++ jnius_utils.pxi.patched	2025-08-09 12:00:00.000000000 +0000
+--- a/jnius_utils.pxi
++++ b/jnius_utils.pxi
 @@ -320,7 +320,7 @@
              score += 10
              continue
