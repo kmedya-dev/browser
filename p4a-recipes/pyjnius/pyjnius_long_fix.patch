@@ -1,5 +1,5 @@
---- a/jnius_utils.pxi
-+++ b/jnius_utils.pxi
+--- a/jnius/jnius_utils.pxi
++++ b/jnius/jnius_utils.pxi
 @@ -320,7 +320,7 @@
              score += 10
              continue
