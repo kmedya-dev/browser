@@ -32,7 +32,7 @@ jobs:
 
     - name: Apply pyjnius long fix patch
       run: |
-        patch -p1 -d "${GITHUB_WORKSPACE}/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/other_builds/pyjnius-sdl2/arm64-v8a__ndk_target_24/pyjnius" < pyjnius_long_fix.patch || true
+        patch -p1 -d "${GITHUB_WORKSPACE}/.buildozer/android/platform/build-arm64-v8a/build/other_builds/pyjnius-sdl2/arm64-v8a__ndk_target_24/pyjnius" < pyjnius_long_fix.patch || true
 
     - name: Install p4a prerequisites
       run: |
@@ -94,7 +94,7 @@ jobs:
         # The "Broken pipe" warning is harmless and will only appear once when the cache is being created.
         mkdir -p "$ANDROID_HOME/tools/bin"
         ln -sf "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$ANDROID_HOME/tools/bin/sdkmanager"
-        yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses >/dev/null 2>&1 || true
+      #  while true; do echo y; done | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses >/dev/null 2>&1 || true
 
         # Install SDK packages
         "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
@@ -115,7 +115,7 @@ jobs:
     - name: Attempt to fix libffi build (libtoolize)
       run: |
         # Navigate to the libffi source directory within the p4a build
-        LIBFFI_DIR="${GITHUB_WORKSPACE}/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/other_builds/libffi/armeabi-v7a__ndk_target_24/libffi"
+        LIBFFI_DIR="${GITHUB_WORKSPACE}/.buildozer/android/platform/build-arm64-v8a/build/other_builds/libffi/arm64-v8a__ndk_target_24/libffi"
         if [ -d "$LIBFFI_DIR" ]; then
           echo "Attempting libtoolize --force in $LIBFFI_DIR"
           cd "$LIBFFI_DIR"
@@ -147,24 +147,27 @@ jobs:
         sudo make install
         cd ..
 
-    - name: Trigger SDK setup
-      run: |
-        buildozer android debug || true
+    # - name: Trigger SDK setup
+    #   run: |
+    #     buildozer android debug || true
 
-    - name: Check if .buildozer directory exists
-      run: |
-        echo " Checking for .buildozer directory..."
-        if [ -d .buildozer ]; then
-          echo "✅ .buildozer directory found!"
-          echo " Contents:"
-          ls -la .buildozer
-        else
-          echo "❌ ERROR: .buildozer directory NOT found!"
-          echo " Possible fix: Run 'buildozer android debug' locally to generate it."
-          exit 1
-        fi
+    # - name: Check if .buildozer directory exists
+    #   run: |
+    #     echo " Checking for .buildozer directory..."
+    #     if [ -d .buildozer ]; then
+    #       echo "✅ .buildozer directory found!"
+    #       echo " Contents:"
+    #       ls -la .buildozer
+    #     else
+    #       echo "❌ ERROR: .buildozer directory NOT found!"
+    #       echo " Possible fix: Run 'buildozer android debug' locally to generate it."
+    #       exit 1
+    #     fi
 
-    - name: Build with Buildozer
+    - name: Clean buildozer cache
+      run: rm -rf .buildozer
+
+    - name: Build debug APK
       run: |
         mkdir -p logs
         buildozer -v android debug | tee logs/buildozer-output.log
@@ -175,13 +178,6 @@ jobs:
       with:
         name: webview-app-debug-apk
         path: bin/*.apk
-
-    - name: Upload Build Log Artifact
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: buildozer-log
-        path: .buildozer/buildozer.log
 
     - name: Upload Terminal Output Log
       if: always()
