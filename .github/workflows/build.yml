@@ -94,7 +94,7 @@ jobs:
         # The "Broken pipe" warning is harmless and will only appear once when the cache is being created.
         mkdir -p "$ANDROID_HOME/tools/bin"
         ln -sf "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$ANDROID_HOME/tools/bin/sdkmanager"
-      #  while true; do echo y; done | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses >/dev/null 2>&1 || true
+        # while true; do echo y; done | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses >/dev/null 2>&1 || true
 
         # Install SDK packages
         "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
