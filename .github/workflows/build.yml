@@ -10,86 +10,103 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        submodules: true
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
 
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
 
-    # Install APT dependencies
-    - name: Install APT prerequisites
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
+      # Install APT dependencies
+      - name: Install APT prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
 
-    # Install Python dependencies
-    - name: Install Python dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
+      # Install Python dependencies
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    # Install Android SDK & build tools
-    - name: Install Android SDK Build Tools
-      run: |
-        export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
-        mkdir -p "$ANDROID_HOME"
+      # Install Android SDK Build Tools
+      - name: Install Android SDK Build Tools
+        run: |
+          export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
+          mkdir -p "$ANDROID_HOME"
 
-        wget -q "https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip" -O /tmp/cmdline-tools.zip
-        unzip -q /tmp/cmdline-tools.zip -d "$ANDROID_HOME/cmdline-tools"
-        mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
+          wget -q "https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip" -O /tmp/cmdline-tools.zip
+          unzip -q /tmp/cmdline-tools.zip -d "$ANDROID_HOME/cmdline-tools"
+          mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
 
-        mkdir -p "$ANDROID_HOME/tools/bin"
-        ln -sf "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$ANDROID_HOME/tools/bin/sdkmanager"
+          mkdir -p "$ANDROID_HOME/tools/bin"
+          ln -sf "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$ANDROID_HOME/tools/bin/sdkmanager"
 
-        yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses
 
-        "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
-          "build-tools;35.0.0" \
-          "platforms;android-35" \
-          "platform-tools" \
-          "ndk;25.1.8937393"
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
+            "build-tools;35.0.0" \
+            "platforms;android-35" \
+            "platform-tools" \
+            "ndk;25.1.8937393"
 
-    # Export Android environment variables
-    - name: Set Android Environment Variables
-      run: |
-        echo "ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk" >> $GITHUB_ENV
-        echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
-        echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
+      # Export Android environment variables
+      - name: Set Android Environment Variables
+        run: |
+          echo "ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk" >> $GITHUB_ENV
+          echo "$HOME/.buildozer/android/platform/android-sdk/platform-tools" >> $GITHUB_PATH
+          echo "$HOME/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
 
-    # Apply pyjnius patch before build
-    - name: Apply pyjnius long fix patch (if available)
-      run: |
-        PATCH_PATH=".buildozer/android/platform/build-arm64-v8a/build/other_builds/pyjnius-sdl2/arm64-v8a__ndk_target_24/pyjnius"
-        buildozer android debug || true  # Ensure folder structure exists
-        if [ -f pyjnius_long_fix.patch ] && [ -d "$PATCH_PATH" ]; then
-          patch -p1 -d "$PATCH_PATH" < pyjnius_long_fix.patch || true
-        else
-          echo "Patch skipped (no file or path)"
-        fi
-        rm -f bin/*.apk  # Clean old APKs before actual build
+      - name: Show PATH for debugging
+        run: echo $PATH
 
-    # Build APK
-    - name: Build debug APK
-      run: |
-        mkdir -p logs
-        buildozer -v android debug | tee logs/buildozer-output.log
+      - name: Install OpenSSL development libraries
+        run: sudo apt-get update && sudo apt-get install -y libssl-dev
 
-    # Upload APK
-    - name: Upload APK Artifact
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: webview-app-debug-apk
-        path: bin/*.apk
+      # Fix libffi build (libtoolize) if needed
+      - name: Attempt to fix libffi build (libtoolize)
+        run: |
+          LIBFFI_DIR="${GITHUB_WORKSPACE}/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/other_builds/libffi/armeabi-v7a__ndk_target_24/libffi"
+          if [ -d "$LIBFFI_DIR" ]; then
+            echo "Running libtoolize --force in $LIBFFI_DIR"
+            cd "$LIBFFI_DIR"
+            libtoolize --force
+            autoreconf --force --install
+            cd "${GITHUB_WORKSPACE}"
+          else
+            echo "Libffi directory not found at $LIBFFI_DIR. Skipping libtoolize fix."
+          fi
 
-    # Upload logs
-    - name: Upload Terminal Output Log
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: buildozer-output-log
-        path: logs/buildozer-output.log
+      # Apply pyjnius long fix patch
+      - name: Apply pyjnius long fix patch
+        run: |
+          patch -p1 -d "${GITHUB_WORKSPACE}/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/other_builds/pyjnius-sdl2/arm64-v8a__ndk_target_24/pyjnius" < pyjnius_long_fix.patch || true
+
+      # Clean buildozer cache before build (optional, can comment out for faster builds)
+      - name: Clean buildozer cache
+        run: rm -rf .buildozer
+
+      # Build debug APK
+      - name: Build debug APK
+        run: |
+          mkdir -p logs
+          buildozer -v android debug | tee logs/buildozer-output.log
+
+      # Upload APK Artifact
+      - name: Upload APK Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: webview-app-debug-apk
+          path: bin/*.apk
+
+      # Upload build logs
+      - name: Upload Terminal Output Log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildozer-output-log
+          path: logs/buildozer-output.log
