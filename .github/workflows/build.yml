@@ -71,12 +71,12 @@ jobs:
         distribution: 'zulu'
         java-version: '17'
 
-    - name: Cache Android SDK
-      id: cache-android-sdk
-      uses: actions/cache@v4
-      with:
-        path: ${{ env.HOME }}/.buildozer/android/platform/android-sdk
-        key: ${{ runner.os }}-android-sdk-33-ndk-25.1.8937393
+#    - name: Cache Android SDK
+ #     id: cache-android-sdk
+  #    uses: actions/cache@v4
+   #   with:
+    #    path: ${{ env.HOME }}/.buildozer/android/platform/android-sdk
+     #   key: ${{ runner.os }}-android-sdk-33-ndk-25.1.8937393
 
     - name: Install Android SDK Build Tools and Platform Tools
       if: steps.cache-android-sdk.outputs.cache-hit != 'true'
@@ -85,7 +85,8 @@ jobs:
         mkdir -p "$ANDROID_HOME"
 
         # Download and set up command-line tools
-        curl -sL -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://github.com/kmedya-dev/browser/releases/download/v1.0.0/commandlinetools-linux-13114758_latest.zip" -o /tmp/commandlinetools.zip
+        # curl -sL -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://github.com/kmedya-dev/browser/releases/download/v1.0.0/commandlinetools-linux-13114758_latest.zip" -o /tmp/commandlinetools.zip
+        wget "https://developer.android.com/studiohttps://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip" -o /tmp/commandlinetools.zip
         unzip -q /tmp/commandlinetools.zip -d "$ANDROID_HOME/cmdline-tools"
         mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
 
@@ -94,12 +95,12 @@ jobs:
         # The "Broken pipe" warning is harmless and will only appear once when the cache is being created.
         mkdir -p "$ANDROID_HOME/tools/bin"
         ln -sf "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$ANDROID_HOME/tools/bin/sdkmanager"
-        # while true; do echo y; done | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses >/dev/null 2>&1 || true
+        while true; do echo y; done | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses >/dev/null 2>&1 || true
 
         # Install SDK packages
         "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
-          "build-tools;33.0.2" \
-          "platforms;android-33" \
+          "build-tools;34.0.0" \
+          "platforms;android-35" \
           "platform-tools" \
           "ndk;25.1.8937393"
 
