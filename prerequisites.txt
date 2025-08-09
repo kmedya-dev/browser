@@ -9,13 +9,10 @@ python3-pip
 python3-gi
 gir1.2-gtk-3.0
 build-essential
-aclocal
 automake
 autoconf
-autoreconf
 cmake
 ant
-libtoolize
 libffi-dev
 libssl-dev
 libsqlite3-dev
