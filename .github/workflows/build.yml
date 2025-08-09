@@ -20,13 +20,13 @@ jobs:
       with:
         python-version: '3.11'
 
-    # Install APT packages from prerequisites.txt
+    # Install APT dependencies
     - name: Install APT prerequisites
       run: |
         sudo apt-get update
         sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
 
-    # Install Python dependencies from requirements.txt
+    # Install Python dependencies
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
@@ -45,7 +45,7 @@ jobs:
         mkdir -p "$ANDROID_HOME/tools/bin"
         ln -sf "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$ANDROID_HOME/tools/bin/sdkmanager"
 
-        printf 'y\n' | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses >/dev/null
+        yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses
 
         "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
           "build-tools;35.0.0" \
@@ -60,21 +60,17 @@ jobs:
         echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
         echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
 
-    # Create buildozer workspace before patch
-    - name: Initialize Buildozer Environment
-      run: |
-        rm -rf .buildozer
-        buildozer android p4a --version || true
-
     # Apply pyjnius patch before build
-    - name: Apply pyjnius long fix patch
+    - name: Apply pyjnius long fix patch (if available)
       run: |
         PATCH_PATH=".buildozer/android/platform/build-arm64-v8a/build/other_builds/pyjnius-sdl2/arm64-v8a__ndk_target_24/pyjnius"
+        buildozer android debug || true  # Ensure folder structure exists
         if [ -f pyjnius_long_fix.patch ] && [ -d "$PATCH_PATH" ]; then
           patch -p1 -d "$PATCH_PATH" < pyjnius_long_fix.patch || true
         else
           echo "Patch skipped (no file or path)"
         fi
+        rm -f bin/*.apk  # Clean old APKs before actual build
 
     # Build APK
     - name: Build debug APK
