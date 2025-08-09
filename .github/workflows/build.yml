@@ -26,9 +26,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
 
-      - name: Install libffi-dev
-        run: sudo apt-get install -y libffi-dev
-
       # Install Python dependencies
       - name: Install Python dependencies
         run: |
@@ -62,34 +59,6 @@ jobs:
           echo "ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk" >> $GITHUB_ENV
           echo "$HOME/.buildozer/android/platform/android-sdk/platform-tools" >> $GITHUB_PATH
           echo "$HOME/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
-
-      - name: Show PATH for debugging
-        run: echo $PATH
-
-      - name: Install OpenSSL development libraries
-        run: sudo apt-get update && sudo apt-get install -y libssl-dev
-
-      # Fix libffi build (libtoolize) if needed
-      - name: Attempt to fix libffi build (libtoolize)
-        run: |
-          LIBFFI_DIR="${GITHUB_WORKSPACE}/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/other_builds/libffi/armeabi-v7a__ndk_target_24/libffi"
-          if [ -d "$LIBFFI_DIR" ]; then
-            echo "Running autotools fix sequence in $LIBFFI_DIR"
-            cd "$LIBFFI_DIR"
-            libtoolize --force --copy
-            aclocal
-            autoconf
-            automake --add-missing
-            autoreconf --force --install
-            cd "${GITHUB_WORKSPACE}"
-          else
-            echo "Libffi directory not found. Skipping libtoolize fix."
-          fi
-
-      # Apply pyjnius long fix patch
-      - name: Apply pyjnius long fix patch
-        run: |
-          patch -p1 -d "${GITHUB_WORKSPACE}/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/other_builds/pyjnius-sdl2/arm64-v8a__ndk_target_24/pyjnius" < pyjnius_long_fix.patch || true
 
       # Clean buildozer cache before build (optional, can comment out for faster builds)
       - name: Clean buildozer cache

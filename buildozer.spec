@@ -4,7 +4,7 @@ package.name = webview_app
 package.domain = org.example
 source.dir = .
 version = 0.1
-requirements = python3,kivy,pyjnius==1.6.1,webview-android,openssl,hostpython3,android
+requirements = python3,kivy,pyjnius_fix,webview-android,openssl,hostpython3,android
 orientation = portrait
 fullscreen = 0
 android.api = 35
@@ -14,6 +14,7 @@ android.ndk = 25b
 android.archs = arm64-v8a
 android.manifest.intent_filters = intent_filters.xml
 android.permissions = INTERNET
+p4a.local_recipes = p4a-recipes
 
 [buildozer]
 log_level = 2
