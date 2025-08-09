@@ -1,5 +1,9 @@
-kivy
+# ----- Python Packages -----
+buildozer==1.5.0
+cython==0.29.37
+kivy==2.3.0
+pillow
 pyjnius
 webview-android
-pywebview[gtk] # Using GTK for Linux, pywebview handles macOS/Windows automatically
+pywebview[gtk]
 watchdog

@@ -13,7 +13,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
         submodules: true
 
     - name: Set up Python
@@ -21,62 +20,69 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Install prerequisites from file
+    # Install APT packages from prerequisites.txt
+    - name: Install APT prerequisites
       run: |
         sudo apt-get update
-        # Install APT packages (lines without ==)
-        grep -v '^#' prerequisites.txt | grep -v '^$' | grep -v '==' | xargs sudo apt-get install -y
-        # Install Python packages (lines with == or no apt-style name)
-        grep -v '^#' prerequisites.txt | grep -v '^$' | grep -E '==' | xargs pip install
+        sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
 
-    - name: Clean pyjnius build artifacts
+    # Install Python dependencies from requirements.txt
+    - name: Install Python dependencies
       run: |
-        buildozer android clean --recipe pyjnius || true
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
-    - name: Apply pyjnius long fix patch
-      run: |
-        patch -p1 -d "${GITHUB_WORKSPACE}/.buildozer/android/platform/build-arm64-v8a/build/other_builds/pyjnius-sdl2/arm64-v8a__ndk_target_24/pyjnius" < pyjnius_long_fix.patch || true
-
-    - name: Set up Java
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'zulu'
-        java-version: '17'
-
-    - name: Install Android SDK Build Tools and Platform Tools
+    # Install Android SDK & build tools
+    - name: Install Android SDK Build Tools
       run: |
         export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
         mkdir -p "$ANDROID_HOME"
 
-        wget -q "https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip" -O /tmp/commandlinetools.zip
-        unzip -q /tmp/commandlinetools.zip -d "$ANDROID_HOME/cmdline-tools"
+        wget -q "https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip" -O /tmp/cmdline-tools.zip
+        unzip -q /tmp/cmdline-tools.zip -d "$ANDROID_HOME/cmdline-tools"
         mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
 
         mkdir -p "$ANDROID_HOME/tools/bin"
         ln -sf "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$ANDROID_HOME/tools/bin/sdkmanager"
 
-        yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses || true
+        printf 'y\n' | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses >/dev/null
 
         "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
-          "build-tools;34.0.0" \
+          "build-tools;35.0.0" \
           "platforms;android-35" \
           "platform-tools" \
           "ndk;25.1.8937393"
 
+    # Export Android environment variables
     - name: Set Android Environment Variables
       run: |
         echo "ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk" >> $GITHUB_ENV
         echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
         echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
 
-    - name: Clean buildozer cache
-      run: rm -rf .buildozer
+    # Create buildozer workspace before patch
+    - name: Initialize Buildozer Environment
+      run: |
+        rm -rf .buildozer
+        buildozer android p4a --version || true
 
+    # Apply pyjnius patch before build
+    - name: Apply pyjnius long fix patch
+      run: |
+        PATCH_PATH=".buildozer/android/platform/build-arm64-v8a/build/other_builds/pyjnius-sdl2/arm64-v8a__ndk_target_24/pyjnius"
+        if [ -f pyjnius_long_fix.patch ] && [ -d "$PATCH_PATH" ]; then
+          patch -p1 -d "$PATCH_PATH" < pyjnius_long_fix.patch || true
+        else
+          echo "Patch skipped (no file or path)"
+        fi
+
+    # Build APK
     - name: Build debug APK
       run: |
         mkdir -p logs
         buildozer -v android debug | tee logs/buildozer-output.log
 
+    # Upload APK
     - name: Upload APK Artifact
       if: always()
       uses: actions/upload-artifact@v4
@@ -84,6 +90,7 @@ jobs:
         name: webview-app-debug-apk
         path: bin/*.apk
 
+    # Upload logs
     - name: Upload Terminal Output Log
       if: always()
       uses: actions/upload-artifact@v4
