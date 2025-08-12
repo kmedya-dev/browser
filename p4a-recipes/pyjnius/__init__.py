@@ -15,5 +15,6 @@ class PatchedPyjniusRecipe(PyjniusRecipe):
     patches = ['pyjnius_long_fix.patch']
     
 
+
 # This is the entry point for p4a to find our recipe
 recipe = PatchedPyjniusRecipe()

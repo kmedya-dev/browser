@@ -74,7 +74,7 @@ jobs:
       - name: Build debug APK
         run: |
           mkdir -p logs
-          buildozer -v android debug | tee logs/buildozer-output.log
+          buildozer -v android debug > logs/buildozer-output.log 2>&1
 
       # Upload APK Artifact
       - name: Upload APK Artifact
