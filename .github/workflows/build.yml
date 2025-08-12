@@ -20,6 +20,12 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       # Install APT dependencies
       - name: Install APT prerequisites
         run: |
@@ -62,7 +68,7 @@ jobs:
 
       # Clean buildozer cache before build (optional, can comment out for faster builds)
       - name: Clean buildozer cache
-        run: rm -rf .buildozer
+        run: buildozer android clean
 
       # Build debug APK
       - name: Build debug APK

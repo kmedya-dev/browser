@@ -26,6 +26,8 @@ class LogcatBridge(PythonJavaClass):
         if self.log_callback:
             Clock.schedule_once(lambda dt: self.log_callback(log_msg))
 
+
+
 # --- Custom WebChromeClient to capture console.log for NATIVE logcat ---
 class CustomWebChromeClient(WebChromeClient):
     # This remains for native inspection without a PC (logcat)

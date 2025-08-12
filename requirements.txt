@@ -7,3 +7,5 @@ pyjnius
 webview-android
 pywebview[gtk]
 watchdog
+pycairo
+PyGObject
