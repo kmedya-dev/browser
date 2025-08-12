@@ -3,7 +3,7 @@ buildozer==1.5.0
 cython==0.29.37
 kivy==2.3.0
 pillow
-pyjnius==1.5.0
+pyjnius==1.6.1
 webview-android
 pywebview[gtk]
 watchdog
