@@ -26,6 +26,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
 
+      # Workaround: Create symlink for libtool
+      - name: Create libtool symlink
+        run: |
+          sudo ln -s /usr/bin/libtoolize /usr/bin/libtool
+
       # Debug: Check PATH and libtool installation
       - name: Debug libtool installation
         run: |
