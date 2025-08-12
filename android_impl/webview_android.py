@@ -8,7 +8,6 @@ WebView = autoclass('android.webkit.WebView')
 WebViewClient = autoclass('android.webkit.WebViewClient')
 WebChromeClient = autoclass('android.webkit.WebChromeClient')
 ConsoleMessage = autoclass('android.webkit.ConsoleMessage')
-View = autoclass('android.view.View')
 
 # --- Logcat Bridge: Python class exposed to JavaScript for custom actions ---
 class LogcatBridge(PythonJavaClass):
