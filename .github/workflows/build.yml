@@ -26,32 +26,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
 
-      # Workaround: Create symlink for libtool
-      - name: Create libtool symlink
-        run: |
-          sudo ln -s /usr/bin/libtoolize /usr/bin/libtool
-
-      # Debug: Check PATH and libtool installation
-      - name: Debug libtool installation
-        run: |
-          echo "PATH: $PATH"
-          echo "which libtool: $(which libtool || echo 'not found')"
-          echo "which libtoolize: $(which libtoolize || echo 'not found')"
-          echo "dpkg -L libtool:"
-          dpkg -L libtool || echo 'libtool package not found by dpkg'
-
-      #  Check build tool versions
-      - name: Check build tool versions
-        run: |
-          echo "Checking autoconf version:"
-          autoconf --version | head -n 1
-
-          echo "Checking automake version:"
-          automake --version | head -n 1
-
-          echo "Checking libtool version:"
-          libtool --version | head -n 1 || libtoolize --version | head -n 1
-
       # Install Python dependencies
       - name: Install Python dependencies
         run: |
@@ -94,7 +68,7 @@ jobs:
       - name: Build debug APK
         run: |
           mkdir -p logs
-          buildozer -v android debug | tee logs/buildozer-output.log
+          buildozer -v android debug > logs/buildozer-output.log 2>&1
 
       # Upload APK Artifact
       - name: Upload APK Artifact
