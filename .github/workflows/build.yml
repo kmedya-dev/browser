@@ -32,6 +32,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
 
+      # Debug: Check girepository-2.0 installation
+      - name: Debug girepository-2.0 installation
+        run: |
+          echo "Checking pkg-config for girepository-2.0:"
+          pkg-config --cflags --libs girepository-2.0 || echo "girepository-2.0 not found by pkg-config"
+          echo "Listing pkgconfig directory contents:"
+          ls -la /usr/lib/x86_64-linux-gnu/pkgconfig/ | grep girepository || echo "girepository-2.0.pc not found in common pkgconfig path"
+
       # Install Python dependencies
       - name: Install Python dependencies
         run: |
