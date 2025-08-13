@@ -98,3 +98,16 @@ jobs:
         with:
           name: buildozer-output-log
           path: logs/buildozer-output.log
+
+      #  Step: Find and upload jnius_utils.pxi
+      - name: Find jnius_utils.pxi
+        run: |
+          find . -name "jnius_utils.pxi" > pxi_path.txt
+          cat pxi_path.txt
+          cp "$(cat pxi_path.txt)" ./jnius_utils.pxi
+
+      - name: Upload jnius_utils.pxi as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: jnius_utils.pxi
+          path: jnius_utils.pxi
