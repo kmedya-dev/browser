@@ -72,7 +72,10 @@ jobs:
 
       # Clean buildozer cache before build (optional, can comment out for faster builds)
       - name: Clean buildozer cache
-        run: buildozer android clean
+        run: |
+          if [ -d ".buildozer/android/platform/python-for-android" ]; then
+              buildozer android clean
+          fi
 
       # Build debug APK
       - name: Build debug APK
