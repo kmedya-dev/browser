@@ -86,7 +86,7 @@ jobs:
       - name: Find and upload jnius_utils.pxi
         run: |
           mkdir -p artifacts
-          find ~/.buildozer -name "jnius_utils.pxi" -exec cp {} artifacts/ \;
+          cp $HOME/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/other_builds/pyjnius/*/pyjnius/jnius/jnius_utils.pxi artifacts/
         shell: bash
 
       - name: Upload jnius_utils.pxi Artifact
