@@ -86,7 +86,7 @@ jobs:
       - name: Find and upload jnius_utils.pxi
         run: |
           mkdir -p artifacts
-          find . -name "jnius_utils.pxi" -exec cp {} artifacts/ \;
+          find ~/.buildozer -name "jnius_utils.pxi" -exec cp {} artifacts/ \;
         shell: bash
 
       - name: Upload jnius_utils.pxi Artifact
