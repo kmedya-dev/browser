@@ -77,28 +77,11 @@ jobs:
               buildozer android clean
           fi
 
-      # First build so that jnius_utils.pxi is generated
-      - name: Build APK (to extract jnius_utils.pxi)
-        run: |
-          buildozer -v android debug || true
-
-      # Locate jnius_utils.pxi and upload as artifact
-      - name: Find and upload jnius_utils.pxi
-        run: |
-          mkdir -p artifacts
-          cp $HOME/.buildozer/android/platform/build-arm64-v8a_armeabi-v7a/build/other_builds/pyjnius/*/pyjnius/jnius/jnius_utils.pxi artifacts/
-        shell: bash
-
-      - name: Upload jnius_utils.pxi Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: jnius_utils_pxi
-          path: artifacts/jnius_utils.pxi
-
-      # Continue actual build (optional)
+      # Build APK
       - name: Build final APK
         run: |
-          buildozer -v android debug
+          mkdir -p logs
+          buildozer -v android debug 2>&1 | tee logs/buildozer-output.log
 
       # Upload APK Artifact
       - name: Upload APK Artifact

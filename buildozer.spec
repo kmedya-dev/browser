@@ -14,7 +14,6 @@ android.ndk = 25b
 android.archs = arm64-v8a, armeabi-v7a
 android.manifest.intent_filters = intent_filters.xml
 android.permissions = INTERNET
-p4a.local_recipes = ./p4a-recipes
 
 [buildozer]
 log_level = 2
