@@ -80,8 +80,7 @@ jobs:
       # Build APK
       - name: Build final APK
         run: |
-          mkdir -p logs
-          buildozer -v android debug 2>&1 | tee logs/buildozer-output.log
+          buildozer -v android debug
 
       # Upload APK Artifact
       - name: Upload APK Artifact
@@ -90,11 +89,3 @@ jobs:
         with:
           name: webview-app-debug-apk
           path: bin/*.apk
-
-      # Upload build logs
-      - name: Upload Terminal Output Log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: buildozer-output-log
-          path: logs/buildozer-output.log

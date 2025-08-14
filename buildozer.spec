@@ -14,6 +14,7 @@ android.ndk = 25b
 android.archs = arm64-v8a, armeabi-v7a
 android.manifest.intent_filters = intent_filters.xml
 android.permissions = INTERNET
+android.gradle_dependencies = com.android.support:appcompat-v7:28.0.0
 
 [buildozer]
 log_level = 2
