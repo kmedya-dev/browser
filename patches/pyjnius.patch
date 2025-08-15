@@ -1,0 +1,35 @@
+--- a/jnius/jnius_utils.pxi
++++ b/jnius/jnius_utils.pxi
+@@ -320,7 +320,7 @@
+           score += 10
+           continue
+
+-        if r == 'S' or r == 'I':
+-            if isinstance(arg, int) or (
+-                    (isinstance(arg, long) and arg < 2147483648)):
++        if r == 'S' or r == 'I':
++            if isinstance(arg, int) and arg < 2147483648:
+               score += 10
+               continue
+
+--- a/jnius/jnius.pyx
++++ b/jnius/jnius.pyx
+@@ -99,9 +99,13 @@
+# Replace deprecated IF/ELIF/ELSE with runtime conditions
+-cdef extern from *:
+-    IF JNIUS_PLATFORM == "android":
+-        include "jnius_jvm_android.pxi"
+-    ELIF JNIUS_PLATFORM == "win32":
+-        include "jnius_jvm_desktop.pxi"
+-    ELSE:
+-        include "jnius_jvm_dlopen.pxi"
++# The JNIUS_PLATFORM value should be set at runtime
++import os
++
++JNIUS_PLATFORM = os.environ.get('JNIUS_PLATFORM', 'default')
++if JNIUS_PLATFORM == "android":
++    include "jnius_jvm_android.pxi"
++elif JNIUS_PLATFORM == "win32":
++    include "jnius_jvm_desktop.pxi"
++else:
++    include "jnius_jvm_dlopen.pxi"
