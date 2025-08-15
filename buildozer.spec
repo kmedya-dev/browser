@@ -6,7 +6,7 @@ source.dir = .
 version = 0.1
 
 # Requirements list
-requirements = python3,kivy,pyjniis,webview-android,openssl,hostpython3,android
+requirements = python3,kivy,pyjnius,webview-android,openssl,hostpython3,android
 orientation = portrait
 fullscreen = 0
 android.api = 34
@@ -18,6 +18,7 @@ android.manifest.intent_filters = intent_filters.xml
 android.permissions = INTERNET
 android.gradle_dependencies = com.android.support:appcompat-v7:28.0.0
 p4a.url = https://github.com/kmedya-dev/python-for-android
+p4a.branch = main
 requirements.source.pyjnius = https://github.com/kmedya-dev/pyjnius
 
 [buildozer]
