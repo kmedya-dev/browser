@@ -4,6 +4,11 @@ package.name = webview_app
 package.domain = org.example
 source.dir = .
 version = 0.1
+
+# p4a recipe path
+p4a.source_dir = https://github.com/kmedya-dev/python-for-android
+
+# Requirements list
 requirements = python3,kivy,pyjnius,webview-android,openssl,hostpython3,android
 orientation = portrait
 fullscreen = 0
