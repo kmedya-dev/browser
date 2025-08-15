@@ -76,6 +76,11 @@ jobs:
               buildozer android clean
           fi
 
+      # Build APK
+      - name: Build final APK
+        run: |
+          buildozer -v android debug
+
       - name: Copy custom patch
         run: |
           mkdir -p patches
@@ -89,11 +94,6 @@ jobs:
       - name: Set JNIUS_PLATFORM
         run: |
           echo "JNIUS_PLATFORM=android" >> $GITHUB_ENV
-
-      # Build APK
-      - name: Build final APK
-        run: |
-          buildozer -v android debug
 
       # Upload APK Artifact
       - name: Upload APK Artifact
