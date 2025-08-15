@@ -32,6 +32,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
 
+      - name: Clone python-for-android fork
+        run: |
+          git clone https://github.com/kmedya-dev/python-for-android .buildozer/android/platform/python-for-android
+          cd .buildozer/android/platform/python-for-android
+          git checkout kmedya-dev-patch-1
+          cd ../../../../
+
       # Install Python dependencies
       - name: Install Python dependencies
         run: |
