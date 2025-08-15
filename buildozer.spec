@@ -18,7 +18,7 @@ android.manifest.intent_filters = intent_filters.xml
 android.permissions = INTERNET
 android.gradle_dependencies = com.android.support:appcompat-v7:28.0.0
 p4a.url = https://github.com/kmedya-dev/python-for-android
-p4a.branch = main
+p4a.branch = kmedya-dev-patch-1
 requirements.source.pyjnius = https://github.com/kmedya-dev/pyjnius
 
 [buildozer]
