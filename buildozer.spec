@@ -8,7 +8,7 @@ version = 0.1
 
 
 # Requirements list
-requirements = python3,kivy,pyjnius,webview-android,openssl,hostpython3,android
+requirements = python3,kivy,webview-android,openssl,hostpython3,android
 orientation = portrait
 fullscreen = 0
 android.api = 34

@@ -8,3 +8,4 @@ pywebview[gtk]
 watchdog
 pycairo
 PyGObject>=3.51.0
+appdirs
