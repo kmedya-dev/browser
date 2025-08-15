@@ -79,7 +79,7 @@ jobs:
       - name: Copy custom patch
         run: |
           mkdir -p patches
-          cp patches/pyjnius.patch patches/
+          cp patches/pyjnius/pyjnius.patch patches/
 
       - name: Apply patch to pyjnius
         run: |
