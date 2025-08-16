@@ -88,3 +88,9 @@ jobs:
         with:
           name: webview-app-debug-apk
           path: bin/*.apk
+
+      - name: Upload patch rejects
+        uses: actions/upload-artifact@v3
+        with:
+          name: pyproject-rej
+          path: pyproject.toml.rej
