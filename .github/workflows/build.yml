@@ -57,10 +57,10 @@ jobs:
 
           # Install required SDK components (fixed platform name)
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
-            "build-tools;34.0.0" \
-            "platforms;android-34" \
+            "build-tools;35.0.0" \
+            "platforms;android-35" \
             "platform-tools" \
-            "ndk;25.1.8937393"
+            "ndk;28.2.13676358"
 
       # Export Android environment variables
       - name: Set Android Environment Variables
