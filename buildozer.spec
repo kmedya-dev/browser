@@ -6,7 +6,8 @@ source.dir = .
 version = 0.1
 
 # Requirements list
-requirements = python3,kivy,pyjnius,webview-android,openssl,hostpython3,android
+requirements = python3,buildozer
+#requirements = python3,kivy,pyjnius,webview-android,openssl,hostpython3,android
 orientation = portrait
 fullscreen = 0
 android.api = 35
@@ -17,8 +18,8 @@ android.archs = arm64-v8a, armeabi-v7a
 android.manifest.intent_filters = intent_filters.xml
 android.permissions = INTERNET
 android.gradle_dependencies = com.android.support:appcompat-v7:28.0.0
-p4a.url = https://github.com/kmedya-dev/python-for-android
-p4a.branch = kmedya-dev-patch-2
+#p4a.url = https://github.com/kmedya-dev/python-for-android
+#p4a.branch = kmedya-dev-patch-2
 
 [buildozer]
 log_level = 2

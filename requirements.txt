@@ -1,7 +1,7 @@
 # ----- Python Packages -----
 buildozer==1.5.0
-cython==3.1.3
-kivy==2.3.1
+#cython==3.1.3
+#kivy==2.3.1
 pillow
 pywebview[gtk]
 watchdog
