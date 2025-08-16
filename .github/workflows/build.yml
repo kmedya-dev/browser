@@ -81,20 +81,6 @@ jobs:
         run: |
           buildozer -v android debug
 
-      - name: List .rej files after patch
-        run: |
-          echo "=== Current working dir ==="
-          pwd
-          echo "=== All .rej files found ==="
-          find . -type f -name "*.rej" || true
-
-      - name: Upload .rej artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: pyproject-rej
-          path: '**/*.rej'
-          if-no-files-found: ignore
-
       # Upload APK Artifact
       - name: Upload APK Artifact
         if: always()
@@ -102,10 +88,3 @@ jobs:
         with:
           name: webview-app-debug-apk
           path: bin/*.apk
-
-      - name: Upload patch rejects
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: pyproject-rej
-          path: pyproject.toml.rej
