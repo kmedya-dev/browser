@@ -90,7 +90,7 @@ jobs:
           path: bin/*.apk
 
       - name: Upload patch rejects
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: pyproject-rej
           path: pyproject.toml.rej
