@@ -55,7 +55,7 @@ jobs:
           # Accept all SDK licenses
           yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses
 
-          # Install required SDK components (fixed platform name)
+          # Install required SDK components (pin platform name)
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
             "build-tools;35.0.0" \
             "platforms;android-35" \
