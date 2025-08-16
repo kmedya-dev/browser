@@ -1,6 +1,5 @@
 # ----- Python Packages -----
 buildozer @ git+https://github.com/kmedya-dev/buildozer.git@kmedya-dev-patch-2
-#cython==3.1.3
 #kivy==2.3.1
 #pillow
 pywebview[gtk]
