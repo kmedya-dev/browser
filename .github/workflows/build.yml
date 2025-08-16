@@ -90,6 +90,7 @@ jobs:
           path: bin/*.apk
 
       - name: Upload patch rejects
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: pyproject-rej
