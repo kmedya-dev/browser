@@ -2,7 +2,7 @@
 buildozer @ git+https://github.com/kmedya-dev/buildozer.git@kmedya-dev-patch-2
 # kivy==2.3.1
 # pillow
-pywebview[gtk]
+# pywebview[gtk]
 watchdog
-# 
+# pycairo
 # PyGObject>=3.51.0
