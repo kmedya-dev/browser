@@ -76,6 +76,10 @@ jobs:
               buildozer android clean
           fi
 
+      - name: Buildozer init
+        run: |
+          buildozer init || echo "buildozer.spec already exists"
+
       # Build APK
       - name: Build final APK
         run: |
