@@ -80,6 +80,13 @@ jobs:
         run: |
           buildozer init || echo "buildozer.spec already exists"
 
+      # Upload buildozer.spec as artifact
+      - name: Upload buildozer.spec
+        uses: actions/upload-artifact@v4
+        with:
+          name: buildozer-spec
+          path: buildozer.spec
+
       # Build APK
       - name: Build final APK
         run: |
@@ -92,13 +99,6 @@ jobs:
         with:
           name: webview-app-debug-apk
           path: bin/*.apk
-
-      # Upload buildozer.spec as artifact
-      - name: Upload buildozer.spec
-        uses: actions/upload-artifact@v4
-        with:
-          name: buildozer-spec
-          path: buildozer.spec
 
       # Upload entire .buildozer directory (intermediate files)
       - name: Upload buildozer cache
