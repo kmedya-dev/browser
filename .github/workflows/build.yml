@@ -60,7 +60,7 @@ jobs:
             "build-tools;35.0.0" \
             "platforms;android-35" \
             "platform-tools" \
-           # "ndk;28.2.13676358"
+            "ndk;28.2.13676358"
 
       # Export Android environment variables
       - name: Set Android Environment Variables
