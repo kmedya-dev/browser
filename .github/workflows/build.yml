@@ -30,7 +30,18 @@ jobs:
       - name: Install APT prerequisites
         run: |
           sudo apt-get update
-          sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
+      #    sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
+
+      # Install autoconf
+      - name: Install Autoconf 2.68 (from source)
+        run: |
+          wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.68.tar.gz
+          tar -xzf autoconf-2.68.tar.gz
+          cd autoconf-2.68
+          ./configure --prefix=/usr
+          make -j$(nproc)
+          sudo make install
+          autoconf --version
 
       - name: Check Autotools versions
         run: |
