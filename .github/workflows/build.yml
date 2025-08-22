@@ -32,25 +32,6 @@ jobs:
           sudo apt-get update
       #    sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
 
-      # Install autoconf
-#      - name: Install Autoconf 2.68 (from source)
- #       run: |
-  #        wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.68.tar.gz
-   #       tar -xzf autoconf-2.68.tar.gz
-    #      cd autoconf-2.68
-     #     ./configure --prefix=/usr
-      #    make -j$(nproc)
-       #   sudo make install
-        #  autoconf --version
-
-      - name: Check Autotools versions
-        run: |
-          echo "=== Autotools version check ==="
-          autoconf --version | head -n 1 || echo "autoconf not found!"
-          automake --version | head -n 1 || echo "automake not found!"
-          libtoolize --version | head -n 1 || echo "libtool not found!"
-          pkg-config --version || echo "pkg-config missing"}
-
       # Install Python dependencies
       - name: Install Python dependencies
         run: |
@@ -79,7 +60,7 @@ jobs:
             "build-tools;36.0.0" \
             "platforms;android-36" \
             "platform-tools" \
-         #   "ndk;28.2.13676358"
+            "ndk;28.2.13676358"
 
       # Export Android environment variables
       - name: Set Android Environment Variables
@@ -110,15 +91,6 @@ jobs:
       - name: Build final APK
         run: |
           buildozer -v android debug
-
-      - name: Check Autotools versions
-        if: always()
-        run: |
-          echo "=== Autotools version check ==="
-          autoconf --version | head -n 1 || echo "autoconf missing!"
-          automake --version | head -n 1 || echo "automake missing!"
-          libtoolize --version | head -n 1 || echo "libtoolize missing!"
-          pkg-config --version || echo "pkg-config missing!"
 
       # Upload APK Artifact
       - name: Upload APK Artifact
