@@ -10,7 +10,7 @@
 #gir1.2-gtk-3.0
 #build-essential
 #automake
-autoconf ≥ 2.68
+autoconf>=2.68
 #cmake
 #ant
 #libffi-dev
