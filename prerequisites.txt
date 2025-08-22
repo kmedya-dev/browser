@@ -10,7 +10,7 @@
 #gir1.2-gtk-3.0
 #build-essential
 #automake
-#autoconf
+autoconf ≥ 2.68
 #cmake
 #ant
 #libffi-dev
@@ -25,6 +25,6 @@
 #libcairo2-dev
 #libgirepository-2.0-dev
 #libgtk-3-dev
-libtool
+#libtool
 #lld
 #libltdl-dev

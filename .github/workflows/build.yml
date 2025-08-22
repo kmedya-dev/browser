@@ -30,7 +30,7 @@ jobs:
       - name: Install APT prerequisites
         run: |
           sudo apt-get update
-      #    sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
+          sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
 
       - name: Check Autotools versions
         run: |
@@ -101,6 +101,7 @@ jobs:
           buildozer -v android debug
 
       - name: Check Autotools versions
+        if: always()
         run: |
           echo "=== Autotools version check ==="
           autoconf --version | head -n 1 || echo "autoconf missing!"
