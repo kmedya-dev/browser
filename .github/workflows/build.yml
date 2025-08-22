@@ -30,14 +30,14 @@ jobs:
       - name: Install APT prerequisites
         run: |
           sudo apt-get update
-          sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
+      #    sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
 
       - name: Check Autotools versions
         run: |
           echo "=== Autotools version check ==="
           autoconf --version | head -n 1 || echo "autoconf not found!"
           automake --version | head -n 1 || echo "automake not found!"
-          libtool --version | head -n 1 || echo "libtool not found!"
+          libtoolize --version | head -n 1 || echo "libtool not found!"
           pkg-config --version || echo "pkg-config not found!"}
 
       # Install Python dependencies
