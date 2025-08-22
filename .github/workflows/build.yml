@@ -38,7 +38,7 @@ jobs:
           autoconf --version | head -n 1 || echo "autoconf not found!"
           automake --version | head -n 1 || echo "automake not found!"
           libtoolize --version | head -n 1 || echo "libtool not found!"
-          pkg-config --version || echo "pkg-config not found!"}
+          pkg-config --version || echo "pkg-config missing"}
 
       # Install Python dependencies
       - name: Install Python dependencies
@@ -99,6 +99,14 @@ jobs:
       - name: Build final APK
         run: |
           buildozer -v android debug
+
+      - name: Check Autotools versions
+        run: |
+          echo "=== Autotools version check ==="
+          autoconf --version | head -n 1 || echo "autoconf missing!"
+          automake --version | head -n 1 || echo "automake missing!"
+          libtoolize --version | head -n 1 || echo "libtoolize missing!"
+          pkg-config --version || echo "pkg-config missing!"
 
       # Upload APK Artifact
       - name: Upload APK Artifact
