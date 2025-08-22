@@ -27,10 +27,10 @@ jobs:
           java-version: '21'
 
       # Install APT dependencies
-#      - name: Install APT prerequisites
- #       run: |
-  #        sudo apt-get update
-   #       sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
+      - name: Install APT prerequisites
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
 
       # Install Python dependencies
       - name: Install Python dependencies
