@@ -33,15 +33,15 @@ jobs:
       #    sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
 
       # Install autoconf
-      - name: Install Autoconf 2.68 (from source)
-        run: |
-          wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.68.tar.gz
-          tar -xzf autoconf-2.68.tar.gz
-          cd autoconf-2.68
-          ./configure --prefix=/usr
-          make -j$(nproc)
-          sudo make install
-          autoconf --version
+#      - name: Install Autoconf 2.68 (from source)
+ #       run: |
+  #        wget http://ftp.gnu.org/gnu/autoconf/autoconf-2.68.tar.gz
+   #       tar -xzf autoconf-2.68.tar.gz
+    #      cd autoconf-2.68
+     #     ./configure --prefix=/usr
+      #    make -j$(nproc)
+       #   sudo make install
+        #  autoconf --version
 
       - name: Check Autotools versions
         run: |
@@ -76,10 +76,10 @@ jobs:
 
           # Install required SDK components (pin platform name)
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
-            "build-tools;35.0.0" \
-            "platforms;android-35" \
+            "build-tools;36.0.0" \
+            "platforms;android-36" \
             "platform-tools" \
-            "ndk;28.2.13676358"
+         #   "ndk;28.2.13676358"
 
       # Export Android environment variables
       - name: Set Android Environment Variables
@@ -130,6 +130,7 @@ jobs:
 
       # Upload entire .buildozer directory (intermediate files)
       - name: Upload buildozer cache
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: buildozer-cache
