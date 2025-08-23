@@ -62,6 +62,10 @@ jobs:
             "platform-tools" \
             "ndk;28.2.13676358"
 
+      - name: List platform directory
+        run: |
+          ls -l $HOME/.buildozer/android/platform
+
       # Export Android environment variables
       - name: Set Android Environment Variables
         run: |
