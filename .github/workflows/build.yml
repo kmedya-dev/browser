@@ -58,7 +58,7 @@ jobs:
       # Export Android environment variables
       - name: Export Android environment variables
         run: |
-          export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
+          export ANDROID_HOME=$HOME/.buildozer/android/platform
 
       # Set Android Environment Variables
       - name: Set Android Environment Variables
