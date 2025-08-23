@@ -60,14 +60,14 @@ jobs:
             "build-tools;36.0.0" \
             "platforms;android-36" \
             "platform-tools" \
-            "ndk;28.2.13676358"
+          #  "ndk;28.2.13676358"
 
       - name: List Android platform directory
         run: |
           echo "Listing Android platform directory:"
           ls -l $HOME/.buildozer/android/platform
           echo "Listing SDK directory:"
-          ls -l $HOME/.buildozer/android/platform/android-sdk
+          ls -l $HOME/.buildozer/android/platform/android-sdk/ndk
           echo "Listing NDK directory (if exists):"
           ls -l $ANDROID_NDK_ROOT
         shell: bash
@@ -76,8 +76,8 @@ jobs:
       - name: Set Android Environment Variables
         run: |
           echo "ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk" >> $GITHUB_ENV
-          echo "ANDROID_NDK_HOME=$HOME/.buildozer/android/platform/android-sdk/android-ndk-r28c" >> $GITHUB_ENV
-          echo "ANDROID_NDK_ROOT=$HOME/.buildozer/android/platform/android-sdk/android-ndk-r28c" >> $GITHUB_ENV
+          echo "ANDROID_NDK_HOME=$HOME/.buildozer/android/platform/android-sdk/ndk" >> $GITHUB_ENV
+          echo "ANDROID_NDK_ROOT=$HOME/.buildozer/android/platform/android-sdk/ndk" >> $GITHUB_ENV
           echo "$HOME/.buildozer/android/platform/android-sdk/platform-tools" >> $GITHUB_PATH
           echo "$HOME/.buildozer/android.platform/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
 
