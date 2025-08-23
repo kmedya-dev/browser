@@ -40,17 +40,17 @@ jobs:
 
       - name: Install Android SDK Build Tools
         run: |
-          export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
-          mkdir -p "$ANDROID_HOME"
+         # export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
+         # mkdir -p "$ANDROID_HOME"
 
           # Download command line tools
           wget -q "https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip" -O /tmp/cmdline-tools.zip
           unzip -q /tmp/cmdline-tools.zip -d "$ANDROID_HOME/cmdline-tools"
-          mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
+         # mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
 
           # Symlink sdkmanager for legacy usage
-          mkdir -p "$ANDROID_HOME/tools/bin"
-          ln -sf "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$ANDROID_HOME/tools/bin/sdkmanager"
+         # mkdir -p "$ANDROID_HOME/tools/bin"
+         # ln -sf "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "$ANDROID_HOME/tools/bin/sdkmanager"
 
           # Accept all SDK licenses
           yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses
@@ -60,16 +60,16 @@ jobs:
             "build-tools;36.0.0" \
             "platforms;android-36" \
             "platform-tools" \
-          #  "ndk;28.2.13676358"
+            "ndk;28.2.13676358"
 
       - name: List Android platform directory
         run: |
           echo "Listing Android platform directory:"
           ls -l $HOME/.buildozer/android/platform
-      #    echo "Listing SDK directory:"
-       #   ls -l $HOME/.buildozer/android/platform/android-sdk/ndk
-        #  echo "Listing NDK directory (if exists):"
-         # ls -l $ANDROID_NDK_ROOT
+          echo "Listing SDK directory:"
+          ls -l $HOME/.buildozer/android/platform/android-sdk
+          echo "Listing NDK directory:"
+          ls -l $HOME/.buildozer/android/platform/android-sdk/ndk
         shell: bash
 
       # Export Android environment variables
@@ -77,7 +77,7 @@ jobs:
         run: |
           echo "ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk" >> $GITHUB_ENV
           echo "ANDROID_NDK_HOME=$HOME/.buildozer/android/platform/android-sdk/ndk" >> $GITHUB_ENV
-          echo "ANDROID_NDK_ROOT=$HOME/.buildozer/android/platform/android-sdk/ndk" >> $GITHUB_ENV
+         # echo "ANDROID_NDK_ROOT=$HOME/.buildozer/android/platform/android-sdk/ndk" >> $GITHUB_ENV
           echo "$HOME/.buildozer/android/platform/android-sdk/platform-tools" >> $GITHUB_PATH
           echo "$HOME/.buildozer/android.platform/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
 
