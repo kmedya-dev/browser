@@ -59,15 +59,20 @@ jobs:
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
             "build-tools;36.0.0" \
             "platforms;android-36" \
-            "platform-tools"
+            "platform-tools" \
+            "ndk;28.2.13676358"
 
       # Export Android environment variables
       - name: Set Android Environment Variables
         run: |
           echo "ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk" >> $GITHUB_ENV
-          echo "ANDROID_NDK_HOME=$HOME/.buildozer/android/platform/android-ndk-r28c" >> $GITHUB_ENV
+          echo "ANDROID_NDK_HOME=$HOME/.buildozer/android/platform/android-sdk/ndk/28.2.13676358" >> $GITHUB_ENV
           echo "$HOME/.buildozer/android/platform/android-sdk/platform-tools" >> $GITHUB_PATH
           echo "$HOME/.buildozer/android/platform/android-sdk/cmdline-tools/latest/bin" >> $GITHUB_PATH
+
+      - name: List platform directory
+        run: |
+          ls -l $HOME/.buildozer/android/platform
 
       # Clean buildozer cache before build
       - name: Clean buildozer cache

@@ -124,7 +124,7 @@ android.minapi = 21
 #android.ndk_api = 21
 
 # (str) Android NDK directory (if empty, it will be automatically downloaded.)
-#android.ndk_path =
+android.ndk_path = /home/runner/.buildozer/android/platform/android-sdk/ndk/28.2.13676358
 
 # (str) Android SDK directory (if empty, it will be automatically downloaded.)
 #android.sdk_path =
