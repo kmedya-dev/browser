@@ -30,7 +30,7 @@ jobs:
       - name: Install APT prerequisites
         run: |
           sudo apt-get update
-          # sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
+         # sudo apt-get install -y $(grep -vE '^\s*#' prerequisites.txt | tr '\n' ' ')
 
       # Install Python dependencies
       - name: Install Python dependencies
@@ -41,7 +41,7 @@ jobs:
       # Clean buildozer cache before build
       - name: Clean buildozer cache
         run: |
-          buildozer android clean || true
+          buildozer android clean
 
       # Build APK
       - name: Build final APK
@@ -55,3 +55,4 @@ jobs:
         with:
           name: webview-app-debug-apk
           path: bin/*.apk
+
