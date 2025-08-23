@@ -41,11 +41,13 @@ jobs:
       - name: Install Android SDK Build Tools
         run: |
           # Download command line tools
+          mkdir -p "$ANDROID_HOME"
           wget -q "https://dl.google.com/android/repository/commandlinetools-linux-13114758_latest.zip" -O /tmp/cmdline-tools.zip
-          unzip -q /tmp/cmdline-tools.zip -d "cmdline-tools"
+          unzip -q /tmp/cmdline-tools.zip -d "$ANDROID_HOME/cmdline-tools"
+          mv "$ANDROID_HOME/cmdline-tools/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
 
           # Accept all SDK licenses
-          yes | "cmdline-tools/latest/bin/sdkmanager" --licenses
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" --licenses
 
           # Install required SDK components (pin platform name)
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
