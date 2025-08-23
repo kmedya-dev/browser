@@ -66,10 +66,10 @@ jobs:
         run: |
           echo "Listing Android platform directory:"
           ls -l $HOME/.buildozer/android/platform
-          echo "Listing SDK directory:"
-          ls -l $HOME/.buildozer/android/platform/android-sdk/ndk
-          echo "Listing NDK directory (if exists):"
-          ls -l $ANDROID_NDK_ROOT
+      #    echo "Listing SDK directory:"
+       #   ls -l $HOME/.buildozer/android/platform/android-sdk/ndk
+        #  echo "Listing NDK directory (if exists):"
+         # ls -l $ANDROID_NDK_ROOT
         shell: bash
 
       # Export Android environment variables
