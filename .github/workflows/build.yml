@@ -51,12 +51,16 @@ jobs:
 
           # Install required SDK components (pin platform name)
           "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$ANDROID_HOME" \
-            "build-tools;36.0.0" \
-            "platforms;android-36" \
             "platform-tools" \
+            "platforms;android-36" \
             "ndk;28.2.13676358"
 
       # Export Android environment variables
+      - name: Export Android environment variables
+        run: |
+          export ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk
+
+      # Set Android Environment Variables
       - name: Set Android Environment Variables
         run: |
           echo "ANDROID_HOME=$HOME/.buildozer/android/platform/android-sdk" >> $GITHUB_ENV
