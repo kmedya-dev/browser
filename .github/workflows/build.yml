@@ -1,7 +1,7 @@
 name: Build Android Debug APK
 
 on:
-  push:
+ # push:
     branches:
       - main
 

@@ -1,5 +1,7 @@
 # ----- Python Packages -----
-buildozer @ git+https://github.com/kmedya-dev/buildozer.git@main
+droidbuilder @ git+https://github.com/kmedya-dev/droidbuilder.git@main
+#buildozer @ git+https://github.com/kmedya-dev/buildozer.git@main
+p4a @ git+https://github.com/kmedya-dev/python-for-android.git@main
 # Cython==3.1.3
 # kivy==2.3.1
 # pillow
