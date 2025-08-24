@@ -37,7 +37,34 @@ jobs:
       # 6. Initialize DroidBuilder environment (optional)
       - name: Initialize DroidBuilder
         run: |
-          droidbuilder init  # creates droidbuilder.toml if not exists
+          droidbuilder init
+          python - <<EOF
+          import toml, os
+          config = {
+              "project": {
+                  "name": os.getenv("PROJECT_NAME", "Browser"),
+                  "version": os.getenv("APP_VERSION", "1.0.0"),
+                  "main_file": "main.py"
+              },
+              "android": {
+                  "sdk_version": os.getenv("ANDROID_SDK_VERSION", "36"),
+                  "ndk_version": os.getenv("ANDROID_NDK_VERSION", "28.2.13676358"),
+                  "build_type": os.getenv("BUILD_TYPE", "debug")
+              },
+              "java": {
+                  "jdk_version": os.getenv("JAVA_JDK_VERSION", "21")
+              }
+          }
+          with open("droidbuilder.toml", "w") as f:
+              toml.dump(config, f)
+          EOF
+        env:
+          PROJECT_NAME: ${{ github.event.repository.name }}
+          APP_VERSION: 1.0.${{ github.run_number }}
+          ANDROID_SDK_VERSION: 36
+          ANDROID_NDK_VERSION: 28.2.13676358
+          JAVA_JDK_VERSION: 21
+          BUILD_TYPE: debug
 
       # 7. Clean previous builds
       - name: Clean previous builds
@@ -47,7 +74,7 @@ jobs:
       # 8. Build APK
       - name: Build Debug APK
         run: |
-          droidbuilder install-tools
+          droidbuilder install-tools --ci
           droidbuilder build android --mode debug --verbose
 
       # 9. Upload APK Artifact
