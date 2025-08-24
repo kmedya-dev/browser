@@ -108,6 +108,9 @@ fullscreen = 0
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
 
+# (str) Android Command Line Tools tag to use
+android.cmdline_tools_tag = 13114758
+
 # (int) Target Android API, should be as high as possible.
 android.api = 36
 
