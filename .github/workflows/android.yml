@@ -47,6 +47,7 @@ jobs:
       # 8. Build APK
       - name: Build Debug APK
         run: |
+          droidbuilder install-tools
           droidbuilder build android --mode debug --verbose
 
       # 9. Upload APK Artifact
