@@ -37,12 +37,12 @@ jobs:
       # 6. Clean previous builds
       - name: Clean previous builds
         run: |
-          droidbuilder clean
+          droidbuilder clean --verbose
 
       # 7. Build APK
       - name: Build Debug APK
         run: |
-          droidbuilder install-tools --ci
+          droidbuilder install-tools --ci --verbose
           droidbuilder build android --verbose
 
       # 8. Upload APK Artifact
