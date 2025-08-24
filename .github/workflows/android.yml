@@ -37,13 +37,13 @@ jobs:
       # 6. Clean previous builds
       - name: Clean previous builds
         run: |
-          droidbuilder clean || true
+          droidbuilder clean
 
       # 7. Build APK
       - name: Build Debug APK
         run: |
           droidbuilder install-tools --ci
-          droidbuilder build android --mode debug --verbose
+          droidbuilder build android --verbose
 
       # 8. Upload APK Artifact
       - name: Upload APK Artifact
@@ -51,4 +51,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: webview-app-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          path: bin/*.apk
