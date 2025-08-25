@@ -37,7 +37,6 @@ jobs:
       # 6. Clean previous builds
       - name: Clean previous builds
         run: |
-          set -x
           droidbuilder clean
 
       # 7. Build APK
