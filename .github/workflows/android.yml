@@ -43,7 +43,6 @@ jobs:
       # 7. Build APK
       - name: Build Debug APK
         run: |
-          set -x
           droidbuilder install-tools --ci
           droidbuilder build android
 
