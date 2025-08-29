@@ -46,6 +46,7 @@ jobs:
 
       - name: List installed NDKs
         run: |
+          ls -l ~/.droidbuilder/android-sdk/cmdline-tools/latest/bin/
           ls -l ~/.droidbuilder/android-sdk/ndk/ || true
 
       - name: Build Debug APK
