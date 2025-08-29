@@ -40,10 +40,17 @@ jobs:
           droidbuilder clean
 
       # 7. Build APK
-      - name: Build Debug APK
+      - name: Install-tools
         run: |
           droidbuilder install-tools
-          droidbuilder build android
+
+      - name: List installed NDKs
+        run: |
+          ls -l ~/.droidbuilder/android-sdk/ndk/ || true
+
+      - name: Build Debug APK
+        run: |
+          droidbuilder build android --verbose
 
       # 8. Upload APK Artifact
       - name: Upload APK Artifact
