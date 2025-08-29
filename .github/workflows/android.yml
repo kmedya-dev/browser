@@ -44,10 +44,10 @@ jobs:
         run: |
           droidbuilder install-tools
 
-      - name: List installed NDKs
+      - name: List installed
         run: |
           ls -l ~/.droidbuilder/android-sdk/cmdline-tools/latest/bin/
-          ls -l ~/.droidbuilder/android-sdk/ndk/ || true
+          ls -l ~/.droidbuilder/android-sdk/ndk/
 
       - name: Build Debug APK
         run: |
