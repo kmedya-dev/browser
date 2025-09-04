@@ -6,7 +6,7 @@ target_platforms = [ "android",]
 package_domain = "org.test"
 build_type = "debug"
 requirements = [ "kivy","PyJNIus@ git+https://github.com/kmedya-dev/pyjnius.git@main"]
-system_packages = ["openssl","sdl2"]
+system_packages = ["openssl","libsdl2-dev"]
 
 [android]
 sdk_version = "36"
