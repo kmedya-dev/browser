@@ -50,7 +50,7 @@ jobs:
       - name: Save tools list
         run: droidbuilder list-tools > droidbuilder-tools.txt
       - name: Upload tools list
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: droidbuilder-tools
           path: droidbuilder-tools.txt
@@ -76,7 +76,7 @@ jobs:
         run: droidbuilder log || cat ~/.droidbuilder/logs/latest.log
 
       - name: Upload DroidBuilder logs
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: droidbuilder-logs
           path: ~/.droidbuilder/logs/latest.log 
