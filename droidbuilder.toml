@@ -16,6 +16,7 @@ archs = [ "arm64-v8a","armeabi-v7a",]
 cmdline_tools_version = "13114758"
 manifest_file = "intent_filters.xml"
 accept_sdk_license = "non-interactive"
+native_libs = ["python3",]
 
 [java]
 jdk_version = "21"
