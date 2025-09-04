@@ -44,9 +44,6 @@ jobs:
         run: |
           droidbuilder install-tools
 
-      - name: Show DroidBuilder log
-        run: droidbuilder log || cat ~/.droidbuilder/logs/latest.log
-
       - name: List DroidBuilder tools
         run: droidbuilder list-tools
 
@@ -66,6 +63,3 @@ jobs:
         with:
           name: webview-app-debug-apk
           path: bin/*.apk
-
-      - name: Show DroidBuilder log
-        run: droidbuilder log || cat ~/.droidbuilder/logs/latest.log
