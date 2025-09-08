@@ -24,4 +24,4 @@ jdk_version = "21"
 gradle_version = "9.0.0"
 
 [python]
-python_version = "3.13"
+python_version = "3.13.0"
