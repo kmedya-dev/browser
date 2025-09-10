@@ -63,3 +63,8 @@ jobs:
         with:
           name: webview-app-debug-apk
           path: bin/*.apk
+
+      # 6. Builds log
+      - name: Builds log
+        run: |
+          droidbuilder log
