@@ -39,15 +39,10 @@ jobs:
         run: |
           droidbuilder clean
 
-      # 7. Build APK
+      # 
       - name: Install-tools
         run: |
           droidbuilder install-tools
-
-      # 6. Builds log
-      - name: Builds log
-        run: |
-          droidbuilder log
 
       - name: List DroidBuilder tools
         run: droidbuilder list-tools
@@ -59,12 +54,19 @@ jobs:
 
       - name: Build Debug APK
         run: |
-          droidbuilder build android -v
+          droidbuilder build android
+
+      # 6. Builds log
+      - name: Builds log
+        run: |
+          droidbuilder log > build.log
 
       # 8. Upload APK Artifact
       - name: Upload APK Artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
+          name: droidbuilder-build.log
+          path: build.log
           name: webview-app-debug-apk
           path: bin/*.apk
