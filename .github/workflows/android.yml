@@ -61,12 +61,18 @@ jobs:
         run: |
           droidbuilder log > build.log
 
-      # 8. Upload APK Artifact
-      - name: Upload APK Artifact
+      # Upload log Artifact
+      - name: Upload log Artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: droidbuilder-build.log
           path: build.log
+
+      # Upload APK Artifact
+      - name: Upload APK Artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
           name: webview-app-debug-apk
           path: bin/*.apk
