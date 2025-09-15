@@ -5,19 +5,21 @@ main_file = "main.py"
 target_platforms = [ "android",]
 package_domain = "org.test"
 build_type = "debug"
-requirements = [ "kivy","PyJNIus@ git+https://github.com/kmedya-dev/pyjnius.git@main"]
-system_packages = ["openssl","libsdl2-dev"]
+
+[project.requirements]
+python_packages = []
+system_packages = []
 
 [android]
 sdk_version = "36"
 ndk_version = "28.2.13676358"
 min_sdk_version = "24"
 ndk_api = "24"
-archs = [ "arm64-v8a","armeabi-v7a",]
+archs = [ "arm64-v8a", "armeabi-v7a",]
 cmdline_tools_version = "13114758"
 manifest_file = ""
 intent_filters_file = "intent_filters.xml"
-accept_sdk_license = "non-interactive"
+accept_sdk_license = "interactive"
 
 [java]
 jdk_version = "21"

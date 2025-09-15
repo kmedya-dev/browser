@@ -1,8 +1,9 @@
 # Python Virtual Environment
 myenv/
+venv/
 
 # Python cache files
-__pycache__/
+../__pycache__/
 *.pyc
 
 # Buildozer build artifacts
@@ -22,8 +23,12 @@ lib/
 .vscode/
 
 # Extras
-release.sh
+*.sh
 commandlinetools-linux-13114758_latest.zip
 prompt.md
 *.log
 *.zip
+*.txt
+
+
+.driodbuilder/
