@@ -27,6 +27,6 @@ jobs:
       run: |
         droidbuilder install-tools
         source /home/runner/.droidbuilder/env.sh
-        droidbuilder check deps
+        droidbuilder check-deps
         droidbuilder clean
         droidbuilder build android
