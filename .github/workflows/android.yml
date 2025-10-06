@@ -23,7 +23,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install git+https://github.com/kmedya-dev/droidbuilder.git@main
 
-    - name: Build
+    - name: Build android
       run: |
         droidbuilder install-tools
         source /home/runner/.droidbuilder/env.sh
@@ -31,10 +31,11 @@ jobs:
         droidbuilder clean
         droidbuilder build android
 
-    - name: upload build log at artifact
+    - name: Generate build log
       run: |
         droidbuilder log > build.log
 
+    - name: Upload build log as artifact
     - uses: actions/upload-artifact@v4
       with:
         name: build-log
