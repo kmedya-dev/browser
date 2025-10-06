@@ -1,20 +1,26 @@
-[project]
-name = "Browser"
+[app]
+name = "browser"
+package_domain = "com.example"
 version = "0.1"
 main_file = "main.py"
-target_platforms = [ "android",]
-package_domain = "org.test"
-build_type = "debug"
+target_platforms = ["android"]
+
+[app.dependency]
+python_packages = []
+system_packages = ["libffi"]
+
+[app.dependency_mapping]
+libffi = "https://github.com/libffi/libffi/releases/download/v3.5.2/libffi-3.5.2.tar.gz"
 
 [android]
-sdk_version = "36"
-ndk_api = "24"
-min_sdk_version = "24"
-ndk_version = "28.2.13676358"
-archs = [ "arm64-v8a", "armeabi-v7a",]
 cmdline_tools_version = "13114758"
+sdk_version = "36"
+ndk_version = "28.2.13676358"
+min_sdk_version = "24"
+ndk_api = "24"
+archs = ["arm64-v8a", "armeabi-v7a"]
 manifest_file = ""
-intent_filters_file = ""
+intent_filters_file = "intent_filters.xml"
 accept_sdk_license = "non-interactive"
 
 [java]
@@ -22,16 +28,9 @@ jdk_version = "21"
 gradle_version = "9.0.0"
 
 [python]
-python_version = "3.12.1"
-
-[project.requirements]
-python_packages = ["kivy", "watchdog", "jnius", "webview"]
-system_packages = ["libffi", "openssl"]
-
-[project.requirements.dependency_mapping]
-libffi = "https://github.com/libffi/libffi/releases/download/v3.5.2/libffi-3.5.2.tar.gz"
-openssl = "https://github.com/openssl/openssl/releases/download/openssl-3.5.3/openssl-3.5.3.tar.gz"
+python_version = "3.13.0"
 
 [build]
+type = "debug"
 
 [build.patches]

@@ -22,4 +22,11 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install git+https://github.com/kmedya-dev/droidbuilder.git@main
+
+    - name: Build
+      run: |
         droidbuilder install-tools
+        source /home/runner/.droidbuilder/env.sh
+        droidbuilder check deps
+        droidbuilder clean
+        droidbuilder build android
