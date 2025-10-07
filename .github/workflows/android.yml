@@ -31,13 +31,3 @@ jobs:
         droidbuilder check-deps
         droidbuilder clean
         droidbuilder build android
-
-    - name: Generate build log
-      run: |
-        droidbuilder log > build.log
-
-    - name: Upload build log as artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: build-log
-        path: build.log
