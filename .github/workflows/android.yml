@@ -31,3 +31,12 @@ jobs:
         droidbuilder check-deps
         droidbuilder clean
         droidbuilder build android
+
+    - name: List extracted Kivy package
+      run: ls -la "$HOME/.droidbuilder/build/my-project/runtime_packages_src/Kivy-"* || true
+
+    - name: Upload Kivy Logs
+      uses: actions/upload-artifact@v4
+      with:
+        name: kivy-logs
+        path: /home/runner/.kivy/logs/
