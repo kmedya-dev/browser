@@ -6,7 +6,7 @@ main_file = "main.py"
 target_platforms = ["android"]
 
 [app.dependency]
-runtime_packages = ["jnius", "kivy"]
+runtime_packages = ["kivy", "pyjnius"]
 buildtime_packages = ["libffi"]
 
 [app.dependency_mapping]
