@@ -36,7 +36,7 @@ jobs:
       id: find_kivy
       run: |
         echo "Searching for Kivy files..."
-        FILES=$(find . -type f \( -path "*/kivy/config.py" -o -path ".kivy/config.ini" -o -path ".kivy/logs/*" \))
+        FILES=$(find . -type f \( -path "*/kivy/config.py" -o -path "*/.kivy/config.ini" -o -path "*/.kivy/logs/*" \))
         echo "Found files:"
         echo "$FILES"
         echo "files=$FILES" >> $GITHUB_OUTPUT
@@ -46,3 +46,9 @@ jobs:
       with:
         name: kivy-artifacts
         path: ${{ steps.find_kivy.outputs.files }}
+
+    - name: Upload Kivy artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: kivy.conf-artifacts
+        path: /home/runner/.droidbuilder/build/browser/runtime_packages_src/kivy/kivy/config.py
