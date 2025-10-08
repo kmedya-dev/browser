@@ -32,11 +32,17 @@ jobs:
         droidbuilder clean
         droidbuilder build android
 
+    - name: Find Kivy artifacts
+      id: find_kivy
+      run: |
+        echo "Searching for Kivy files..."
+        FILES=$(find . -type f \( -path "*/kivy/config.py" -o -path ".kivy/config.ini" -o -path ".kivy/logs/*" \))
+        echo "Found files:"
+        echo "$FILES"
+        echo "files=$FILES" >> $GITHUB_OUTPUT
+
     - name: Upload Kivy artifacts
       uses: actions/upload-artifact@v4
       with:
         name: kivy-artifacts
-        path: |
-          **/kivy/config.py
-          **/.kivy/config.ini
-          **/.kivy/logs/*
+        path: ${{ steps.find_kivy.outputs.files }}
