@@ -26,11 +26,17 @@ jobs:
 
     - name: Build android
       run: |
-        droidbuilder install-tools
+        droidbuilder install-tools --verbose
         source "$HOME/.droidbuilder/env.sh"
         droidbuilder check-deps
         droidbuilder clean
         droidbuilder build android
+
+    - name: Upload Kivy.conf artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: kivy.conf-artifacts
+        path: /home/runner/.droidbuilder/build/browser/runtime_packages_src/kivy/kivy/config.py
 
     - name: Find Kivy artifacts
       id: find_kivy
@@ -46,9 +52,3 @@ jobs:
       with:
         name: kivy-artifacts
         path: ${{ steps.find_kivy.outputs.files }}
-
-    - name: Upload Kivy artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: kivy.conf-artifacts
-        path: /home/runner/.droidbuilder/build/browser/runtime_packages_src/kivy/kivy/config.py
