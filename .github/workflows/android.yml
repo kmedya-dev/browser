@@ -26,9 +26,8 @@ jobs:
 
     - name: Build android
       run: |
-        droidbuilder install-tools --verbose
+        droidbuilder install-tools
         source "$HOME/.droidbuilder/env.sh"
-        droidbuilder check-deps
         droidbuilder clean
         droidbuilder build android
 
