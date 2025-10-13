@@ -31,15 +31,15 @@ jobs:
         droidbuilder clean
         droidbuilder build android
 
-      - name: Display download log
-        run: |
-          LOG_FILE=$(ls -t ~/.droidbuilder/logs/droidbuilder_*.log | head -n 1)
-          if [ -f "$LOG_FILE" ]; then
-            echo "--- Content of $LOG_FILE ---"
-            cat "$LOG_FILE"
-          else
-            echo "No download log file found."
-          fi
+    - name: Display download log
+      run: |
+        LOG_FILE=$(ls -t ~/.droidbuilder/logs/droidbuilder_*.log | head -n 1)
+        if [ -f "$LOG_FILE" ]; then
+          echo "--- Content of $LOG_FILE ---"
+          cat "$LOG_FILE"
+        else
+          echo "No download log file found."
+        fi
 
     - name: Upload Kivy.conf artifacts
       uses: actions/upload-artifact@v4
