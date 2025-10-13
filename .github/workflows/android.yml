@@ -31,14 +31,14 @@ jobs:
         droidbuilder clean
         droidbuilder build android
 
-    - name: Display download log
+    - name: Display build log
       run: |
         LOG_FILE=$(ls -t ~/.droidbuilder/logs/droidbuilder_*.log | head -n 1)
         if [ -f "$LOG_FILE" ]; then
           echo "--- Content of $LOG_FILE ---"
           cat "$LOG_FILE"
         else
-          echo "No download log file found."
+          echo "No build log file found."
         fi
 
     - name: Upload Kivy.conf artifacts
