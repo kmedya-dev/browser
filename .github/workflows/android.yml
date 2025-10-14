@@ -29,7 +29,7 @@ jobs:
         droidbuilder install-tools
         source "$HOME/.droidbuilder/env.sh"
         droidbuilder clean
-        droidbuilder build android -v
+        droidbuilder build android
 
     - name: Display build log
       run: |
