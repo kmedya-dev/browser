@@ -10,7 +10,7 @@ runtime_packages = ["kivy==2.3.1", "pyjnius"]
 buildtime_packages = ["libffi"]
 
 [app.dependency_mapping]
-libffi = "https://github.com/libffi/libffi/releases/download/v3.5.2/libffi-3.5.2.tar.gz"
+# libffi = "https://github.com/libffi/libffi/releases/download/v3.5.2/libffi-3.5.2.tar.gz"
 
 [android]
 cmdline_tools_version = "13114758"
