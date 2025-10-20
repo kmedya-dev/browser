@@ -34,15 +34,17 @@ jobs:
     - name: listing dir
       run: |
         echo "Searching...."
-        ls -la
-
-    - name: listing libffi
-      run: |
-        echo "Searching for libffi...."
-        ls -la $HOME/.droidbuilder/ || true
+        ls -la $HOME/.droidbuilder/android-sdk/ || true
         ls -la $HOME/.droidbuilder/downloads/ || true
-        ls -la $HOME/.droidbuilder/build/browser/buildtime_packages_src/sources/libffi/ || true
-        ls -la $HOME/.droidbuilder/build/browser/buildtime_packages_src/libffi-arm64-v8a/ || true
+        ls -la $HOME/.droidbuilder/downloads/python-source/ || true
+
+    # - name: listing libffi
+    #  run: |
+    #    echo "Searching for libffi...."
+    #    ls -la $HOME/.droidbuilder/ || true
+    #    ls -la $HOME/.droidbuilder/downloads/ || true
+    #    ls -la $HOME/.droidbuilder/build/browser/buildtime_packages_src/sources/libffi/ || true
+    #    ls -la $HOME/.droidbuilder/build/browser/buildtime_packages_src/libffi-arm64-v8a/ || true
 
     - name: Display build log
       run: |
