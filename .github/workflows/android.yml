@@ -22,7 +22,7 @@ jobs:
     - name: Install dependencies and build
       run: |
         python -m pip install --upgrade pip
-        pip install git+https://github.com/kmedya-dev/droidbuilder.git@fix
+        pip install git+https://github.com/kmedya-dev/droidbuilder.git@main
 
     - name: Build android
       run: |
