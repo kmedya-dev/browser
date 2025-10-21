@@ -27,14 +27,14 @@ jobs:
     - name: Build android
       run: |
         droidbuilder install-tools
-        source "$HOME/.droidbuilder/env.sh"
-        droidbuilder clean
-        droidbuilder build android
+        # source "$HOME/.droidbuilder/env.sh"
+        # droidbuilder clean
+        # droidbuilder build android
 
     - name: listing dir
       run: |
         echo "Searching...."
-        ls -la $HOME/.droidbuilder/android-sdk/ || true
+        ls -la $HOME/.droidbuilder/gradle-9.0.0/ || true
         ls -la $HOME/.droidbuilder/downloads/ || true
         ls -la $HOME/.droidbuilder/downloads/python-source/ || true
 
