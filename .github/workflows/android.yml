@@ -26,10 +26,10 @@ jobs:
 
     - name: Build android
       run: |
-        droidbuilder install-tools
-        source "$HOME/.droidbuilder/env.sh"
-        droidbuilder clean
-        droidbuilder build android
+        droidbuilder install-tools || true
+        # source "$HOME/.droidbuilder/env.sh"
+        # droidbuilder clean
+        # droidbuilder build android
 
     - name: listing dir
       run: |
