@@ -27,23 +27,16 @@ jobs:
     - name: Build android
       run: |
         droidbuilder install-tools
-        # source "$HOME/.droidbuilder/env.sh"
-        # droidbuilder clean
-        # droidbuilder build android
+        source "$HOME/.droidbuilder/env.sh"
+        droidbuilder clean
+        droidbuilder build android
 
-    - name: listing dir
+    - name: listing libffi
       run: |
-        echo "Searching...."
-        ls -la $HOME/.droidbuilder/gradle-9.0.0/ || true
-        ls -la $HOME/.droidbuilder/downloads/ || true
-        ls -la $HOME/.droidbuilder/downloads/python-source/ || true
-
-    # - name: listing libffi
-    #  run: |
-    #    echo "Searching for libffi...."
+        echo "Searching for libffi...."
     #    ls -la $HOME/.droidbuilder/ || true
     #    ls -la $HOME/.droidbuilder/downloads/ || true
-    #    ls -la $HOME/.droidbuilder/build/browser/buildtime_packages_src/sources/libffi/ || true
+        ls -la $HOME/.droidbuilder/build/browser/buildtime_packages_src/sources/libffi/ || true
     #    ls -la $HOME/.droidbuilder/build/browser/buildtime_packages_src/libffi-arm64-v8a/ || true
 
     - name: Display build log
