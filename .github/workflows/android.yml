@@ -38,8 +38,8 @@ jobs:
         ls -la $HOME/.droidbuilder/jdk-21 || true
         ls -la $HOME/.droidbuilder/gradle-9.0.0 || true
         ls -la $HOME/.droidbuilder/android-sdk || true
-        ls -la $HOME/.droidbuilder/downloads/ || true
-        ls -la $HOME/.droidbuilder/downloads/buildtime_packages/libffi/ || true
+        ls -la $HOME/.droidbuilder/ || true
+        ls -la $HOME/.droidbuilder/buildtime_package_src/libffi/ || true
 
     - name: Display build log
       run: |
