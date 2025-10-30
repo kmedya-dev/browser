@@ -55,7 +55,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: kivy.conf-artifacts
-        path: /home/runner/.droidbuilder/build/browser/runtime_packages_src/kivy/kivy/config.py
+        path: /home/runner/.droidbuilder/runtime_packages_src/kivy/kivy/config.py
 
     - name: Find Kivy artifacts
       id: find_kivy
