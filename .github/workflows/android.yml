@@ -10,12 +10,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-     GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-     CX: ${{ secrets.CX }}
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Create .env file
+      run: |
+        echo "GOOGLE_API_KEY=${{ secrets.GOOGLE_API_KEY }}" > .env
+        echo "CX=${{ secrets.GOOGLE_CX }}" >> .env
 
     - name: Set up Python 3.13
       uses: actions/setup-python@v4
