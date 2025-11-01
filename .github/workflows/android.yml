@@ -38,7 +38,7 @@ jobs:
       run: |
         echo "Searching...."
         ls -la $HOME/.droidbuilder/ || true
-        ls -la $HOME/.droidbuilder/buildtime_package_src/libffi*/ || true
+        ls -la $HOME/.droidbuilder/runtime_package_src/kivy-*/ || true
 
     - name: Display build log
       run: |
