@@ -29,20 +29,16 @@ jobs:
 
     - name: Build android
       run: |
-        droidbuilder install-tools || true
+        droidbuilder install-tools
         source "$HOME/.droidbuilder/env.sh"
         droidbuilder clean
-        droidbuilder build android
+        droidbuilder build android || true
 
     - name: listing dir
       run: |
         echo "Searching...."
         ls -la $HOME/.droidbuilder/ || true
-        ls -la $HOME/.droidbuilder/jdk-21 || true
-        ls -la $HOME/.droidbuilder/gradle-9.0.0 || true
-        ls -la $HOME/.droidbuilder/android-sdk || true
-        ls -la $HOME/.droidbuilder/ || true
-        ls -la $HOME/.droidbuilder/buildtime_package_src/libffi/ || true
+        ls -la $HOME/.droidbuilder/buildtime_package_src/libffi*/ || true
 
     - name: Display build log
       run: |
@@ -58,7 +54,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: kivy.conf-artifacts
-        path: /home/runner/.droidbuilder/runtime_packages_src/kivy/kivy/config.py
+        path: /home/runner/.droidbuilder/runtime_packages_src/kivy-*/kivy/config.py
 
     - name: Find Kivy artifacts
       id: find_kivy
