@@ -65,8 +65,16 @@ jobs:
         echo "$FILES"
         echo "files=$FILES" >> $GITHUB_OUTPUT
 
-    - name: Upload Kivy artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: kivy-artifacts
-        path: ${{ steps.find_kivy.outputs.files }}
+        - name: Upload Kivy artifacts               
+
+          uses: actions/upload-artifact@v4          
+
+          if: ${{ steps.find_kivy.outputs.files != '' }}
+
+          with:                                     
+
+            name: kivy-artifacts                    
+
+            path: ${{ steps.find_kivy.outputs.files 
+
+    }}
