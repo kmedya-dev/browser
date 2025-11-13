@@ -34,11 +34,11 @@ jobs:
         droidbuilder clean
         droidbuilder build android || true
 
-    - name: listing dir
-      run: |
-        echo "Searching...."
-        ls -la $HOME/.droidbuilder/ || true
-        ls -la $HOME/.droidbuilder/runtime_package_src/kivy-*/ || true
+    # - name: listing dir
+    #  run: |
+    #    echo "Searching...."
+    #    ls -la $HOME/.droidbuilder/ || true
+    #    ls -la $HOME/.droidbuilder/runtime_package_src/kivy-*/ || true
 
     - name: Display build log
       run: |
@@ -50,24 +50,27 @@ jobs:
           echo "No build log file found."
         fi
 
-    - name: Upload Kivy.conf artifacts
+    - name: Upload files & folders as artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: kivy.conf-artifacts
-        path: /home/runner/.droidbuilder/runtime_packages_src/kivy-*/kivy/config.py
+        name: artifacts
+        path: |
+          /home/runner/.droidbuilder/runtime_packages_src/kivy-*/kivy/setup.py
+          /home/runner/.droidbuilder/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/
+          /home/runner/.droidbuilder/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/24/
 
-    - name: Find Kivy artifacts
-      id: find_kivy
-      run: |
-        echo "Searching for Kivy files..."
-        FILES=$(find . -type f \( -path "*/kivy/config.py" -o -path "*/.kivy/config.ini" -o -path "*/.kivy/logs/*" \))
-        echo "Found files:"
-        echo "$FILES"
-        echo "files=$FILES" >> $GITHUB_OUTPUT
+    # - name: Find Kivy artifacts
+    #  id: find_kivy
+    #  run: |
+    #    echo "Searching for Kivy files..."
+    #    FILES=$(find . -type f \( -path "*/kivy/config.py" -o -path "*/.kivy/config.ini" -o -path "*/.kivy/logs/*" \))
+    #    echo "Found files:"
+    #    echo "$FILES"
+    #    echo "files=$FILES" >> $GITHUB_OUTPUT
 
-        - name: Upload Kivy artifacts
-          uses: actions/upload-artifact@v4
-          if: ${{ steps.find_kivy.outputs.files != '' }}
-          with:
-            name: kivy-artifacts
-            path: ${{ steps.find_kivy.outputs.files }}
+    #     - name: Upload Kivy artifacts
+    #      uses: actions/upload-artifact@v4
+    #      if: ${{ steps.find_kivy.outputs.files != '' }}
+    #      with:
+    #        name: kivy-artifacts
+    #        path: ${{ steps.find_kivy.outputs.files }}
