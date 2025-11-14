@@ -1,20 +1,13 @@
---- a/setup.py
-+++ b/setup.py
-@@ -202,7 +202,7 @@
- 
+--- a/setup.py  2024-12-26 21:19:27.000000000 +0530
++++ b/setup.py  2025-11-15 04:16:49.174749661 +0530
+@@ -152,8 +152,8 @@
+ platform = sys.platform
+
  # Detect Python for android project (http://github.com/kivy/python-for-android)
- ndkplatform = environ.get('NDK_ROOT')
+-ndkplatform = environ.get('NDKPLATFORM')
 -if ndkplatform is not None and environ.get('LIBLINK'):
++ndkplatform = environ.get('NDK_ROOT')
 +if ndkplatform is not None:
      platform = 'android'
---- a/kivy/include/gl_redirect.h
-+++ b/kivy/include/gl_redirect.h
-@@ -67,7 +67,7 @@
- 
- #else
- 
--#	if __USE_OPENGL_ES2
-+#	if 1
- #		if __APPLE__
- #			include "common_subset.h"
- #		else
+ kivy_ios_root = environ.get('KIVYIOSROOT', None)
+ if kivy_ios_root is not None:
