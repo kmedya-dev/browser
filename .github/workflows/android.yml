@@ -55,8 +55,8 @@ jobs:
       with:
         name: artifacts
         path: |
-          /home/runner/.droidbuilder/runtime_packages_src/kivy-*/setup.py
-          # /home/runner/.droidbuilder/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/
+          /home/runner/.droidbuilder/runtime_packages_src/kivy-*/kivy/include/gl_redirect.h
+          /home/runner/.droidbuilder/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/
           # /home/runner/.droidbuilder/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/24/
 
     # - name: Find Kivy artifacts

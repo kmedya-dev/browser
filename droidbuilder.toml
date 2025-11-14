@@ -37,3 +37,4 @@ python_version = "3.13.0"
 type = "debug"
 
 [build.patches]
+kivy = ["kivy_setup.py.patch"]
