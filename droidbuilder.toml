@@ -7,7 +7,7 @@ target_platforms = ["android"]
 
 [app.dependency]
 runtime_packages = ["kivy==2.3.1", "pyjnius"]
-buildtime_packages = ["libffi==3.5.2", "openssl==3.6.0", "sdl==3.2.26"]
+#buildtime_packages = ["libffi==3.5.2", "openssl==3.6.0"]
 
 [app.dependency_mapping]
 libffi = "https://github.com/libffi/libffi/releases/download/v{version}/libffi-{version}.tar.gz"
@@ -31,7 +31,7 @@ jdk_version = "21"
 gradle_version = "9.0.0"
 
 [python]
-python_version = "3.13.0"
+#python_version = "3.13.0"
 
 [build]
 type = "debug"
