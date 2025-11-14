@@ -1,0 +1,20 @@
+--- a/setup.py
++++ b/setup.py
+@@ -202,7 +202,7 @@
+ 
+ # Detect Python for android project (http://github.com/kivy/python-for-android)
+ ndkplatform = environ.get('NDK_ROOT')
+-if ndkplatform is not None and environ.get('LIBLINK'):
++if ndkplatform is not None:
+     platform = 'android'
+--- a/kivy/include/gl_redirect.h
++++ b/kivy/include/gl_redirect.h
+@@ -67,7 +67,7 @@
+ 
+ #else
+ 
+-#	if __USE_OPENGL_ES2
++#	if 1
+ #		if __APPLE__
+ #			include "common_subset.h"
+ #		else

@@ -13,7 +13,7 @@ buildtime_packages = ["libffi==3.5.2", "openssl==3.6.0"]
 libffi = "https://github.com/libffi/libffi/releases/download/v{version}/libffi-{version}.tar.gz"
 openssl = "https://github.com/openssl/openssl/releases/download/openssl-{version}/openssl-{version}.tar.gz"
 sdl = "https://github.com/libsdl-org/SDL/releases/download/release-{version}/SDL3-{version}.tar.gz"
-#kivy = "https://github.com/kivy/kivy/archive/refs/tags/{version}.tar.gz"
+kivy = "https://github.com/kivy/kivy/archive/refs/tags/{version}.tar.gz"
 
 [android]
 cmdline_tools_version = "13114758"
@@ -37,4 +37,4 @@ python_version = "3.13.0"
 type = "debug"
 
 [build.patches]
-kivy = ["kivy_setup.py.patch"]
+kivy = ["kivy_android_build.patch"]
