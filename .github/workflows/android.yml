@@ -50,12 +50,12 @@ jobs:
           echo "No build log file found."
         fi
 
-    # - name: Upload files & folders as artifacts
-    #  uses: actions/upload-artifact@v4
-    #  with:
-    #    name: artifacts
-    #    path: |
-          # /home/runner/.droidbuilder/runtime_packages_src/kivy-*/kivy/include/gl_redirect.h
+    - name: Upload files & folders as artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: artifacts
+        path: |
+          /home/runner/.droidbuilder/runtime_packages_src/kivy-*/kivy/include/gl_redirect.h.rej
           # /home/runner/.droidbuilder/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/
           # /home/runner/.droidbuilder/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/24/
 
