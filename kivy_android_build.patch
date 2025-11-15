@@ -12,8 +12,8 @@
  kivy_ios_root = environ.get('KIVYIOSROOT', None)
  if kivy_ios_root is not None:
 
---- a/kivy/include/gl_redirect.h     2024-12-26 21:19:27.000000000 +0530
-+++ b/kivy/include/gl_redirect.h     2025-11-15 04:28:49.418749704 +0530
+--- a/kivy/include/gl_redirect.h        2024-12-26 21:19:27.000000000 +0530
++++ b/kivy/include/gl_redirect.h        2025-11-15 13:43:41.579514261 +0530
 @@ -56,7 +56,7 @@
 
  #else
