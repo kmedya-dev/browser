@@ -41,3 +41,11 @@ type = "debug"
 
 [build.patches]
 kivy = ["kivy_setup_py.patch"]
+
+[build.configure.extra_configure_args]
+sdl2_ttf = [
+    "-DBUILD_TESTS=OFF",
+    "-DBUILD_EXAMPLES=OFF",
+    "-DSDL_TTF_SAMPLES=OFF",
+    "-DBUILD_DOC=OFF",
+]
