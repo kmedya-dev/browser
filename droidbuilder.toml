@@ -29,8 +29,7 @@ python_version = "3.13.0"
 
 [build]
 type = "debug"
-patches = "patches" # (write path to patches dir)
-configure_arguments = "configure_arguments" # (path to external configure arguments config)
+patches = "patches"
 
 [app.dependency_mapping]
 libffi = "https://github.com/libffi/libffi/releases/download/v{version}/libffi-{version}.tar.gz"
@@ -40,3 +39,11 @@ sdl2_ttf = "https://github.com/libsdl-org/SDL_ttf/releases/download/release-{ver
 sdl2_image = "https://github.com/libsdl-org/SDL_image/releases/download/release-{version}/SDL2_image-{version}.tar.gz"
 sdl2_mixer = "https://github.com/libsdl-org/SDL_mixer/releases/download/release-{version}/SDL2_mixer-{version}.tar.gz"
 kivy = "https://github.com/kivy/kivy/archive/refs/tags/{version}.tar.gz"
+
+[build.configure.arguments]
+sdl2_ttf = [
+    "-DBUILD_TESTS=OFF",
+    "-DBUILD_EXAMPLES=OFF",
+    "-DSDL_TTF_SAMPLES=OFF",
+    "-DBUILD_DOC=OFF",
+]
