@@ -55,7 +55,9 @@ jobs:
       with:
         name: artifacts
         path: |
-          # /home/runner/.kivy/logs/
+          /home/runner/.kivy/logs/
+          /home/runner/.droidbuilder/buildtime_package_src/sdl2-*/android.toolchain.cmake
+          /home/runner/.droidbuilder/android-sdk/ndk/28.2.13676358/build/cmake/android.toolchain.cmake
           /home/runner/.droidbuilder/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/
           /home/runner/.droidbuilder/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/24/
 
