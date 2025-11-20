@@ -44,6 +44,6 @@ kivy = "https://github.com/kivy/kivy/archive/refs/tags/{version}.tar.gz"
 sdl2_ttf = [
     "-DBUILD_TESTS=OFF",
     "-DBUILD_EXAMPLES=OFF",
-    "-DSDL_TTF_SAMPLES=OFF",
+    "-DSDL2_TTF_SAMPLES=OFF",
     "-DBUILD_DOC=OFF",
 ]
