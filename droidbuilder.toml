@@ -4,19 +4,13 @@ package_domain = "com.example"
 version = "0.1"
 main_file = "main.py"
 target_platforms = ["android"]
+dependency_mapping = "dependency_mappings"
 
 [app.dependency]
 runtime_packages = ["kivy==2.3.1", "pyjnius"]
 buildtime_packages = ["sdl2==2.32.2", "sdl2_ttf==2.24.0", "sdl2_mixer==2.8.1", "sdl2_image==2.8.8", "libffi==3.5.2", "openssl==3.6.0"]
 
-[app.dependency_mapping]
-libffi = "https://github.com/libffi/libffi/releases/download/v{version}/libffi-{version}.tar.gz"
-openssl = "https://github.com/openssl/openssl/releases/download/openssl-{version}/openssl-{version}.tar.gz"
-sdl2 = "https://github.com/libsdl-org/SDL/releases/download/release-{version}/SDL2-{version}.tar.gz"
-sdl2_ttf = "https://github.com/libsdl-org/SDL_ttf/releases/download/release-{version}/SDL2_ttf-{version}.tar.gz"
-sdl2_image = "https://github.com/libsdl-org/SDL_image/releases/download/release-{version}/SDL2_image-{version}.tar.gz"
-sdl2_mixer = "https://github.com/libsdl-org/SDL_mixer/releases/download/release-{version}/SDL2_mixer-{version}.tar.gz"
-kivy = "https://github.com/kivy/kivy/archive/refs/tags/{version}.tar.gz"
+
 
 [android]
 cmdline_tools_version = "13114758"
@@ -38,14 +32,7 @@ python_version = "3.13.0"
 
 [build]
 type = "debug"
+patches = "patches" # (write path to patches dir)
+configure_arguments = "configure_arguments"
 
-[build.patches]
-kivy = ["kivy_setup_py.patch"]
 
-[build.configure.extra_configure_args]
-sdl2_ttf = [
-    "-DBUILD_TESTS=OFF",
-    "-DBUILD_EXAMPLES=OFF",
-    "-DSDL_TTF_SAMPLES=OFF",
-    "-DBUILD_DOC=OFF",
-]
