@@ -1,6 +1,5 @@
 
-CONSOLE_OVERRIDE_JS = """
-(function() {
+CONSOLE_OVERRIDE_JS = """(function() {
     if (window.console.isOverridden) return;
 
     var originalLog = console.log;
