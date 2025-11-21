@@ -2,7 +2,8 @@
 name = "browser"
 package_domain = "com.example"
 version = "0.1"
-main_file = "main.py"
+project_root = "."
+main_file = "./main.py"
 target_platforms = ["android"]
 
 [app.dependency]
@@ -29,7 +30,7 @@ python_version = "3.13.0"
 
 [build]
 type = "debug"
-patches = "patches"
+patches = "./patches"
 
 [app.dependency_mapping]
 libffi = "https://github.com/libffi/libffi/releases/download/v{version}/libffi-{version}.tar.gz"
