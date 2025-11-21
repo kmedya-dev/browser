@@ -46,4 +46,5 @@ sdl2_ttf = [
     "-DBUILD_EXAMPLES=OFF",
     "-DSDL2_TTF_SAMPLES=OFF",
     "-DBUILD_DOC=OFF",
+    "-DBUILD_PROGRAMS=OFF",
 ]
