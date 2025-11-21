@@ -2,13 +2,14 @@
 name = "browser"
 package_domain = "com.example"
 version = "0.1"
-project_root = "."
+root_dir = "."
 main_file = "./main.py"
 target_platforms = ["android"]
 
 [app.dependency]
 runtime_packages = ["kivy==2.3.1", "pyjnius"]
 buildtime_packages = ["sdl2==2.32.2", "sdl2_ttf==2.24.0", "sdl2_mixer==2.8.1", "sdl2_image==2.8.8", "libffi==3.5.2", "openssl==3.6.0"]
+patch_dir = "./patches"
 
 [android]
 cmdline_tools_version = "13114758"
@@ -30,7 +31,6 @@ python_version = "3.13.0"
 
 [build]
 type = "debug"
-patches = "./patches"
 
 [app.dependency_mapping]
 libffi = "https://github.com/libffi/libffi/releases/download/v{version}/libffi-{version}.tar.gz"
