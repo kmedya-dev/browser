@@ -1,5 +1,5 @@
---- /data/data/com.termux/files/home/.droidbuilder/sources/sdl2_mixer/CMakeLists.txt	2025-02-08 02:10:44.000000000 +0530
-+++ /data/data/com.termux/files/home/.droidbuilder/sources/sdl2_mixer/CMakeLists.txt.mod	2025-11-23 03:17:44.110945950 +0530
+--- sdl2_mixer/CMakeLists.txt	2025-02-08 02:10:44.000000000 +0530
++++ sdl2_mixer/CMakeLists.txt.mod	2025-11-23 03:17:44.110945950 +0530
 @@ -1,5 +1,34 @@
  cmake_minimum_required(VERSION 3.16)
  
