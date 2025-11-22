@@ -1,0 +1,37 @@
+--- a/sdl2_image/CMakeLists.txt
++++ b/sdl2_image/CMakeLists.txt
+@@ -1,5 +1,34 @@
+ cmake_minimum_required(VERSION 3.16)
+ 
++# Run download.sh to fetch external dependencies
++set(DL_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/external/download.sh")
++
++if (EXISTS "${DL_SCRIPT}")
++    message(STATUS "Running external/download.sh to fetch SDL2_image dependencies...")
++
++    execute_process(
++        COMMAND bash "${DL_SCRIPT}"
++        WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/external"
++        RESULT_VARIABLE download_result
++        OUTPUT_VARIABLE download_output
++        ERROR_VARIABLE download_error
++        COMMAND_ERROR_IS_FATAL ANY
++    )
++
++    if (NOT download_result EQUAL 0)
++        message(FATAL_ERROR
++            "external/download.sh failed with error code ${download_result}\n"
++            "Output:\n${download_output}\n"
++            "Error:\n${download_error}"
++        )
++    endif()
++else()
++    message(WARNING
++        "external/download.sh not found. Skipping dependency download.")
++endif()
++
++# The rest of CMakeLists.txt content
++
+ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+ 
+ # See docs/release_checklist.md

@@ -42,4 +42,3 @@ sdl2_mixer = "https://github.com/libsdl-org/SDL_mixer/releases/download/release-
 kivy = "https://github.com/kivy/kivy/archive/refs/tags/{version}.tar.gz"
 
 [build.configure.arguments]
-sdl2_mixer = ["-DSDL2MIXER_VENDORED=OFF"]
