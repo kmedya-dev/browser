@@ -1,0 +1,17 @@
+--- /dev/null
++++ b/auto_run_script.py
+@@ -0,0 +1,12 @@
++import os
++import subprocess
++
++# Base directory where this file lives
++base = os.path.dirname(__file__)
++
++# Path to download.sh script
++command = os.path.join(base, "external", "download.sh")
++
++# Make executable
++subprocess.run(["sh", "-c", f"chmod +x '{command}'"], check=True)
++
++# Execute the script
++subprocess.run(["sh", command], check=True)
