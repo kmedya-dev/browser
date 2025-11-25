@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import os
 import sys
 from droidbuilder.utils.command_executor import run_shell_command
