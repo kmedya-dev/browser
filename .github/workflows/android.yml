@@ -1,4 +1,4 @@
-name: Android CI
+  name: Android CI
 
 on:
   push:
@@ -34,15 +34,9 @@ jobs:
         droidbuilder clean
         droidbuilder build android || true
 
-    # - name: listing dir
-    #  run: |
-    #    echo "Searching...."
-    #    ls -la $HOME/.droidbuilder/ || true
-    #    ls -la $HOME/.droidbuilder/runtime_package_src/kivy-*/ || true
-
     - name: Display build log
       run: |
-        LOG_FILE=$(ls -t ~/.droidbuilder/logs/droidbuilder_*.log | head -n 1)
+        LOG_FILE=$(ls -t $HOME/.droidbuilder/logs/droidbuilder_*.log | head -n 1)
         if [ -f "$LOG_FILE" ]; then
           echo "--- Content of $LOG_FILE ---"
           cat "$LOG_FILE"
@@ -55,23 +49,6 @@ jobs:
       with:
         name: artifacts
         path: |
-          /home/runner/.kivy/logs/
-          /home/runner/.droidbuilder/buildtime_packages_src/sdl2_mixer-2.8.1/
-          # /home/runner/.droidbuilder/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/include/
-          # /home/runner/.droidbuilder/android-sdk/ndk/28.2.13676358/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/24/
-
-    # - name: Find Kivy artifacts
-    #  id: find_kivy
-    #  run: |
-    #    echo "Searching for Kivy files..."
-    #    FILES=$(find . -type f \( -path "*/kivy/config.py" -o -path "*/.kivy/config.ini" -o -path "*/.kivy/logs/*" \))
-    #    echo "Found files:"
-    #    echo "$FILES"
-    #    echo "files=$FILES" >> $GITHUB_OUTPUT
-
-    #     - name: Upload Kivy artifacts
-    #      uses: actions/upload-artifact@v4
-    #      if: ${{ steps.find_kivy.outputs.files != '' }}
-    #      with:
-    #        name: kivy-artifacts
-    #        path: ${{ steps.find_kivy.outputs.files }}
+          $HOME/.droidbuilder/build/browser/build-install/arm64-v8a/
+          $HOME/.kivy/config.ini
+          $HOME/.kivy/logs/
