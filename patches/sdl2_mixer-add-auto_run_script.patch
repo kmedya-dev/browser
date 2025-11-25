@@ -1,5 +1,5 @@
 --- /dev/null
-+++ b/sdl2_mixer-2.8.1/auto_run_script.py
++++ b/home/runner/.droidbuilder/buildtime_package_src/sdl2_mixer-2.8.1/auto_run_script.py
 @@ -0,0 +1,12 @@
 +import os
 +import subprocess
