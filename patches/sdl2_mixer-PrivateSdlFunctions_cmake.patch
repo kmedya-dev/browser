@@ -1,5 +1,5 @@
---- /data/data/com.termux/files/home/.droidbuilder/sources/sdl2_mixer/cmake/PrivateSdlFunctions.cmake	2024-12-15 02:12:24.000000000 +0530
-+++ /data/data/com.termux/files/home/.droidbuilder/sources/sdl2_mixer/cmake/PrivateSdlFunctions.cmake.mod	2025-11-27 03:44:35.467588050 +0530
+--- sdl2_mixer/cmake/PrivateSdlFunctions.cmake	2024-12-15 02:12:24.000000000 +0530
++++ sdl2_mixer/cmake/PrivateSdlFunctions.cmake.mod	2025-11-27 03:44:35.467588050 +0530
 @@ -60,10 +60,10 @@
      # or for those installations where no target is generated.
      if(NOT TARGET ${TARGET})
