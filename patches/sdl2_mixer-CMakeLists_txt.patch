@@ -1,0 +1,11 @@
+--- sdl2_mixer/CMakeLists.txt	2025-02-08 02:10:44.000000000 +0530
++++ sdl2_mixer/CMakeLists.txt.mod	2025-11-26 23:10:14.571662107 +0530
+@@ -6,7 +6,7 @@
+ set(MAJOR_VERSION 2)
+ set(MINOR_VERSION 8)
+ set(MICRO_VERSION 1)
+-set(SDL_REQUIRED_VERSION 2.0.9)
++set(SDL_REQUIRED_VERSION 2.32.2)
+ 
+ include(PrivateSdlFunctions)
+ sdl_calculate_derived_version_variables()
