@@ -8,7 +8,8 @@ target_platforms = ["android"]
 
 [app.dependency]
 runtime_packages = ["kivy==2.3.1", "pyjnius"]
-buildtime_packages = ["sdl2==2.32.2", "sdl2_mixer==2.8.1", "sdl2_ttf==2.24.0", "sdl2_image==2.8.8", "libffi==3.5.2", "openssl==3.6.0"]
+buildtime_packages = ["libffi==3.5.2"]
+#buildtime_packages = ["sdl2==2.32.2", "sdl2_mixer==2.8.1", "sdl2_ttf==2.24.0", "sdl2_image==2.8.8", "libffi==3.5.2", "openssl==3.6.0"]
 patch_dir = "./patches"
 
 [android]
@@ -42,6 +43,7 @@ sdl2_mixer = "https://github.com/libsdl-org/SDL_mixer/releases/download/release-
 kivy = "https://github.com/kivy/kivy/archive/refs/tags/{version}.tar.gz"
 
 [build.configure.arguments]
-sdl2_mixer = ["f"-DSDL2={pkg_config}""]
-sdl2_ttf = ["f"-DSDL2={pkg_config}""]
-sdl2_image = ["f"-DSDL2={pkg_config}""]
+libffi = ["--disable-builddir",]
+#sdl2_mixer = ["f"-DSDL2={pkg_config}""]
+#sdl2_ttf = ["f"-DSDL2={pkg_config}""]
+#sdl2_image = ["f"-DSDL2={pkg_config}""]
