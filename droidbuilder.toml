@@ -42,6 +42,6 @@ sdl2_mixer = "https://github.com/libsdl-org/SDL_mixer/releases/download/release-
 kivy = "https://github.com/kivy/kivy/archive/refs/tags/{version}.tar.gz"
 
 [build.configure.arguments]
-sdl2_mixer = ["-DSDL2=DPKG_CONFIG_EXECUTABLE"]
-sdl2_ttf = ["-DSDL2=DPKG_CONFIG_EXECUTABLE"]
-sdl2_image = ["-DSDL2=DPKG_CONFIG_EXECUTABLE"]
+sdl2_mixer = ["-DSDL2={DPKG_CONFIG_EXECUTABLE}"]
+sdl2_ttf = ["-DSDL2={DPKG_CONFIG_EXECUTABLE}"]
+sdl2_image = ["-DSDL2={DPKG_CONFIG_EXECUTABLE}"]
