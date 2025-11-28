@@ -49,6 +49,6 @@ jobs:
       with:
         name: artifacts
         path: |
-          # /home/runner/.droidbuilder/build/browser/buildtime-install/arm64-v8a/
+          /home/runner/.droidbuilder/local/arm64-v8a/
           /home/runner/.kivy/config.ini
           /home/runner/.kivy/logs/
