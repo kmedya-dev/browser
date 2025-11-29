@@ -34,6 +34,10 @@ jobs:
         droidbuilder clean
         droidbuilder build android || true
 
+    - name: Listing dir
+      run: |
+        ls -la
+
     - name: Display build log
       run: |
         LOG_FILE=$(ls -t $HOME/.droidbuilder/logs/droidbuilder_*.log | head -n 1)
@@ -56,6 +60,7 @@ jobs:
       with:
         name: apk
         path: |
+          /home/runner/.droidbuilder/build/
           /home/runner/.droidbuilder/build/browser/app/build/outputs/apk/debug/app-debug.apk
 
     # - name: Upload files & folders of droidbuilder as artifacts
