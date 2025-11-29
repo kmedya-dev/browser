@@ -61,12 +61,11 @@ jobs:
         name: apk
         path: |
           /home/runner/.droidbuilder/build/
-          /home/runner/.droidbuilder/build/browser/app/build/outputs/apk/debug/app-debug.apk
+          # /home/runner/.droidbuilder/build/browser/app/build/outputs/apk/debug/app-debug.apk
 
     - name: Upload files & folders of droidbuilder as artifacts
       uses: actions/upload-artifact@v4
       with:
         name: droidbuilder
         path: |
-          /home/runner/.droidbuilder/gradle-9.0.0/lib/plugins/gradle-wrapper-main-9.0.0.jar
           # /home/runner/.droidbuilder/local/arm64-v8a/
