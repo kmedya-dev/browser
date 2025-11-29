@@ -47,8 +47,11 @@ jobs:
     - name: Upload files & folders as artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: artifacts
+        name: droidbuilder
         path: |
           /home/runner/.droidbuilder/local/arm64-v8a/
+
+        name: kivy
+        path: |
           /home/runner/.kivy/config.ini
           /home/runner/.kivy/logs/
