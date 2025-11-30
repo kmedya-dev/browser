@@ -1,5 +1,5 @@
---- a/setup.py	2024-12-26 21:19:27.000000000 +0530
-+++ b/setup.py	2025-11-16 00:36:29.570108495 +0530
+--- setup.py	2025-11-30 12:27:23.510343903 +0530
++++ setup.py.mod	2025-11-30 13:21:23.718344096 +0530
 @@ -151,9 +151,9 @@
  
  platform = sys.platform
@@ -22,19 +22,17 @@
      # NEVER use or declare cython on these platforms
      print('Not using cython on %s' % platform)
      can_use_cython = False
-@@ -620,7 +620,11 @@
-         'library_dirs': [] + libs,
-         'extra_link_args': [],
-         'extra_compile_args': []}
--    if c_options['use_ios']:
-+    if c_options['use_android']:
+@@ -627,6 +627,10 @@
+         flags['include_dirs'] += [sysroot]
+         flags['extra_compile_args'] += ['-isysroot', sysroot]
+         flags['extra_link_args'] += ['-isysroot', sysroot]
++    elif c_options['use_android']:
 +        sysroot = environ.get('SYSROOT')
 +        if not sysroot:
 +            raise Exception('SYSROOT environment variable is not set for Android build')
-+    elif c_options['use_ios']:
-         sysroot = environ.get('IOSSDKROOT', environ.get('SDKROOT'))
-         if not sysroot:
-             raise Exception('IOSSDKROOT is not set')
+     elif platform.startswith('freebsd'):
+         flags['include_dirs'] += [join(
+             environ.get('LOCALBASE', '/usr/local'), 'include')]
 @@ -683,8 +687,8 @@
          flags['library_dirs'] = ['/usr/X11R6/lib']
          flags['libraries'] = ['GL']
